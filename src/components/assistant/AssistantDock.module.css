@@ -1,0 +1,287 @@
+/* =========================================================================
+   Assistant dock — Paper nodes "Assistant circle", "Assistant open",
+   "09 Assistant — explaining" and "10 Assistant — tracking an order".
+   ========================================================================= */
+
+.dock {
+  position: fixed;
+  /* Track the right edge of the 1440 page, not the window. */
+  right: max(40px, calc(50vw - (var(--page-width) / 2) + 40px));
+  bottom: 36px;
+  z-index: 60;
+  display: flex;
+  flex-direction: column;
+  align-items: flex-end;
+  gap: 14px;
+  pointer-events: none;
+}
+
+.dock > * {
+  pointer-events: auto;
+}
+
+/* --- the nudge card ------------------------------------------------------ */
+
+.nudge {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+  padding-block: 15px;
+  padding-inline: 20px;
+  background: #ffffff;
+  border: 1px solid var(--color-dust);
+  box-shadow: 0 10px 30px #12120f1f;
+  max-width: min(444px, calc(100vw - 80px));
+}
+
+.nudgeText {
+  font-size: 15px;
+  line-height: 18px;
+  color: var(--color-slate);
+}
+
+.nudgeClose {
+  font-family: var(--font-mono);
+  font-size: 14px;
+  line-height: 18px;
+  color: var(--color-graphite);
+  transition: color 0.2s ease;
+}
+
+.nudgeClose:hover {
+  color: var(--color-slate);
+}
+
+/* --- the button ---------------------------------------------------------- */
+
+.fab {
+  position: relative;
+  width: 64px;
+  height: 64px;
+  flex-shrink: 0;
+  border-radius: 34px;
+  background: var(--color-copper);
+  box-shadow: 0 10px 26px #1f6b5b61;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+/* Two rings breathe outward so the corner has a heartbeat without moving. */
+.ping {
+  position: absolute;
+  inset: 0;
+  border-radius: 34px;
+  border: 2px solid var(--color-copper);
+  animation: gc-ping 2.8s cubic-bezier(0.16, 1, 0.3, 1) infinite;
+  pointer-events: none;
+}
+
+.ping:nth-of-type(2) {
+  animation-delay: 1.4s;
+}
+
+.fabMark {
+  position: relative;
+  flex-shrink: 0;
+}
+
+/* --- the panel ----------------------------------------------------------- */
+
+.panel {
+  --panel-pad: 18px;
+  --panel-gap: 15px;
+
+  display: flex;
+  flex-direction: column;
+  width: 492px;
+  max-width: calc(100vw - 80px);
+  height: min(935px, calc(100vh - 120px));
+  background: #ffffff;
+  border: 1px solid var(--color-dust);
+  box-shadow: 0 18px 50px #12120f33;
+  overflow: hidden;
+  transform-origin: bottom right;
+}
+
+/* The explaining and tracking threads are drawn on a slightly wider frame. */
+.panel[data-conversation='explain'],
+.panel[data-conversation='track'] {
+  --panel-pad: 20px;
+  --panel-gap: 16px;
+  width: 540px;
+}
+
+.panelHead {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  padding-block: 14px;
+  padding-inline: 18px;
+  background: var(--color-slate);
+  flex-shrink: 0;
+}
+
+.panelBrand {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+}
+
+.panelTitle {
+  font-family: var(--font-mono);
+  font-size: 11px;
+  line-height: 14px;
+  letter-spacing: 0.1em;
+  color: var(--ink-text);
+  white-space: nowrap;
+}
+
+.panelControls {
+  display: flex;
+  align-items: center;
+  gap: 14px;
+}
+
+.panelControl {
+  font-family: var(--font-mono);
+  color: var(--ink-text-faint);
+  transition: color 0.2s ease;
+}
+
+.panelControl:hover {
+  color: var(--ink-text);
+}
+
+.panelControlExpand {
+  font-size: 13px;
+  line-height: 16px;
+}
+
+.panelControlClose {
+  font-size: 15px;
+  line-height: 18px;
+}
+
+/* --- quick actions ------------------------------------------------------- */
+
+.chips {
+  display: flex;
+  align-items: center;
+  gap: 6px;
+  padding-block: 12px;
+  padding-inline: 18px;
+  background: var(--color-limestone);
+  border-bottom: 1px solid var(--color-dust);
+  flex-shrink: 0;
+}
+
+.chip {
+  position: relative;
+  padding-block: 6px;
+  padding-inline: 11px;
+  background: #ffffff;
+  border: 1px solid var(--color-dust);
+  font-size: 12px;
+  line-height: 16px;
+  color: var(--color-slate);
+  transition: border-color 0.2s ease, color 0.2s ease;
+}
+
+.chip:hover {
+  border-color: var(--color-copper);
+  color: var(--color-copper);
+}
+
+.chip[data-current='true'] {
+  border-color: var(--color-copper);
+  color: var(--color-copper);
+}
+
+/* --- thread -------------------------------------------------------------- */
+
+.thread {
+  flex: 1;
+  min-height: 0;
+  overflow-y: auto;
+  display: flex;
+  flex-direction: column;
+  gap: var(--panel-gap);
+  padding: var(--panel-pad);
+  scrollbar-width: thin;
+  scrollbar-color: var(--color-dust) transparent;
+}
+
+.thread::-webkit-scrollbar {
+  width: 8px;
+}
+
+.thread::-webkit-scrollbar-thumb {
+  background: var(--color-dust);
+}
+
+/* --- composer ------------------------------------------------------------ */
+
+.composer {
+  display: flex;
+  align-items: center;
+  gap: 9px;
+  padding-block: 14px;
+  padding-inline: var(--panel-pad);
+  border-top: 1px solid var(--color-dust);
+  flex-shrink: 0;
+}
+
+.composerField {
+  flex: 1;
+  min-width: 0;
+  padding-block: 11px;
+  padding-inline: 13px;
+  background: var(--color-limestone);
+  border: 1px solid var(--color-dust);
+  font-size: 14px;
+  line-height: 18px;
+  color: var(--color-slate);
+  transition: border-color 0.2s ease;
+}
+
+.composerField::placeholder {
+  color: var(--color-graphite);
+}
+
+.composerField:focus {
+  outline: none;
+  border-color: var(--color-copper);
+}
+
+.composerSend {
+  display: flex;
+  align-items: center;
+  padding-block: 11px;
+  padding-inline: 16px;
+  background: var(--color-slate);
+  color: var(--ink-text);
+  font-size: 13px;
+  line-height: 16px;
+  font-weight: 600;
+  transition: background-color 0.2s ease;
+}
+
+.composerSend:hover {
+  background: #14171a;
+}
+
+@media (max-width: 620px) {
+  .dock {
+    right: 16px;
+    bottom: 16px;
+  }
+  .panel,
+  .panel[data-conversation='explain'],
+  .panel[data-conversation='track'] {
+    width: calc(100vw - 32px);
+  }
+  .nudge {
+    max-width: calc(100vw - 32px);
+  }
+}

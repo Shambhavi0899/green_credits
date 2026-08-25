@@ -1,0 +1,656 @@
+/* Credit detail — Paper artboard "06 Credit details". */
+
+.top {
+  display: flex;
+  flex-direction: column;
+  gap: 22px;
+  padding-top: 48px;
+}
+
+.layout {
+  display: flex;
+  align-items: flex-start;
+  justify-content: space-between;
+  gap: 48px;
+}
+
+.main {
+  width: 800px;
+  flex-shrink: 0;
+  display: flex;
+  flex-direction: column;
+}
+
+.tags {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 7px;
+}
+
+.tag {
+  display: flex;
+  align-items: center;
+  gap: 6px;
+  padding-block: 6px;
+  padding-inline: 11px;
+  font-size: 13px;
+  line-height: 16px;
+}
+
+.tag[data-tone='verified'],
+.tag[data-tone='copper'] {
+  background: var(--color-copper-tint);
+  color: var(--color-copper);
+}
+
+.tag[data-tone='neutral'] {
+  background: var(--color-limestone);
+  border: 1px solid var(--color-dust);
+  color: var(--color-graphite);
+}
+
+/* The design marks the oil-and-gas caveat in oxide, not brass. */
+.tag[data-tone='brass'] {
+  background: var(--color-oxide-tint);
+  color: var(--color-oxide);
+}
+
+.tagTick {
+  font-family: var(--font-mono);
+  font-size: 10px;
+  line-height: 12px;
+}
+
+.title {
+  margin: 0;
+  font-family: var(--font-display);
+  font-size: 46px;
+  line-height: 47px;
+  font-weight: 800;
+  letter-spacing: -0.022em;
+  font-stretch: 120%;
+  font-variation-settings: 'wdth' 120;
+  color: var(--color-slate);
+}
+
+.summary {
+  font-size: 17px;
+  line-height: 28px;
+  color: var(--color-graphite);
+}
+
+/* --- gallery ------------------------------------------------------------- */
+
+.gallery {
+  display: flex;
+  flex-direction: column;
+  gap: 12px;
+  padding-top: 10px;
+}
+
+.stage {
+  position: relative;
+  height: 430px;
+  width: 100%;
+  overflow: hidden;
+  background: var(--color-dust);
+}
+
+.frame {
+  position: absolute;
+  inset: 0;
+  background-position: 50%;
+  background-size: cover;
+}
+
+.arrow {
+  position: absolute;
+  top: 190px;
+  width: 44px;
+  height: 44px;
+  border-radius: 24px;
+  background: #ffffffeb;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-family: var(--font-mono);
+  font-size: 16px;
+  line-height: 20px;
+  color: var(--color-slate);
+  transition: transform 0.25s cubic-bezier(0.16, 1, 0.3, 1), background-color 0.25s ease;
+  z-index: 2;
+}
+
+.arrow:hover {
+  background: #ffffff;
+}
+
+.arrowPrev {
+  left: 16px;
+}
+
+.arrowPrev:hover {
+  transform: translateX(-3px);
+}
+
+.arrowNext {
+  right: 16px;
+}
+
+.arrowNext:hover {
+  transform: translateX(3px);
+}
+
+.counter {
+  position: absolute;
+  top: 16px;
+  right: 16px;
+  z-index: 2;
+  display: flex;
+  align-items: center;
+  padding-block: 7px;
+  padding-inline: 12px;
+  background: #12120fb8;
+  font-family: var(--font-mono);
+  font-size: 11px;
+  line-height: 14px;
+  letter-spacing: 0.07em;
+  color: #ffffff;
+}
+
+.dots {
+  position: absolute;
+  left: 0;
+  right: 0;
+  bottom: 16px;
+  z-index: 2;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 7px;
+}
+
+.dot {
+  width: 4px;
+  height: 4px;
+  border-radius: 3px;
+  background: #ffffff8c;
+  transition: background-color 0.25s ease;
+}
+
+.dot[data-active='true'] {
+  width: 22px;
+  border-radius: 0;
+  background: #ffffff;
+}
+
+.thumbs {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  /* Five fixed 104px slots. Below the artboard measure the rail scrolls
+     rather than pushing the page sideways. */
+  overflow-x: auto;
+  scrollbar-width: thin;
+}
+
+.thumb {
+  width: 104px;
+  height: 74px;
+  flex-shrink: 0;
+  overflow: hidden;
+  background: var(--color-dust);
+  border: 2px solid transparent;
+  transition: border-color 0.25s ease;
+}
+
+.thumb[data-active='true'] {
+  border-color: var(--color-copper);
+}
+
+.thumbImage {
+  display: block;
+  width: 100%;
+  height: 100%;
+  background-position: 50%;
+  background-size: cover;
+}
+
+.thumbMore {
+  width: 104px;
+  height: 74px;
+  flex-shrink: 0;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  background: var(--color-limestone);
+  border: 1px solid var(--color-dust);
+  font-size: 13px;
+  line-height: 16px;
+  color: var(--color-graphite);
+}
+
+.galleryMeta {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 20px;
+  padding-top: 4px;
+}
+
+.galleryCaption,
+.gallerySource {
+  font-family: var(--font-mono);
+  font-size: 11px;
+  line-height: 14px;
+  letter-spacing: 0.07em;
+  color: var(--color-graphite);
+}
+
+/* --- spec tables --------------------------------------------------------- */
+
+.table {
+  display: flex;
+  flex-direction: column;
+  width: 100%;
+  background: var(--color-paper);
+  border: 1px solid var(--color-dust);
+}
+
+.tableTop {
+  margin-top: 34px;
+}
+
+.tableHead {
+  padding-block: 16px;
+  padding-inline: 24px;
+  background: var(--color-limestone);
+  border-bottom: 1px solid var(--color-dust);
+  font-family: var(--font-mono);
+  font-size: 11px;
+  line-height: 14px;
+  letter-spacing: 0.1em;
+  color: var(--color-graphite);
+}
+
+.specRow {
+  display: flex;
+  align-items: center;
+  padding-block: 16px;
+  padding-inline: 24px;
+  border-bottom: 1px solid var(--color-dust);
+}
+
+.table > .specRow:last-child {
+  border-bottom: 0;
+}
+
+.specLabel {
+  width: 220px;
+  flex-shrink: 0;
+  font-size: 15px;
+  line-height: 18px;
+  color: var(--color-graphite);
+}
+
+.specValue {
+  font-size: 15px;
+  line-height: 18px;
+  color: var(--color-slate);
+}
+
+/* --- buy panel ----------------------------------------------------------- */
+
+.rail {
+  width: 376px;
+  flex-shrink: 0;
+  display: flex;
+  flex-direction: column;
+  gap: 20px;
+  position: sticky;
+  top: 108px;
+}
+
+.buy {
+  display: flex;
+  flex-direction: column;
+  gap: 14px;
+  width: 100%;
+  padding: 24px;
+  background: var(--color-paper);
+  border: 1px solid var(--color-dust);
+}
+
+.buyPrice {
+  display: flex;
+  align-items: baseline;
+  gap: 8px;
+}
+
+.buyPriceValue {
+  font-family: var(--font-mono);
+  font-size: 34px;
+  line-height: 42px;
+  letter-spacing: -0.025em;
+  color: var(--color-slate);
+}
+
+.buyPriceUnit,
+.buyAvailability {
+  font-size: 14px;
+  line-height: 18px;
+  color: var(--color-graphite);
+}
+
+.quantityRow {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  padding-top: 6px;
+}
+
+.quantityField {
+  flex: 1;
+  min-width: 0;
+  padding-block: 11px;
+  padding-inline: 14px;
+  background: var(--color-limestone);
+  border: 1px solid var(--color-dust);
+  font-size: 15px;
+  line-height: 18px;
+  color: var(--color-slate);
+  transition: border-color 0.25s ease;
+}
+
+.quantityField:focus {
+  outline: none;
+  border-color: var(--color-copper);
+}
+
+.quantityUnit {
+  font-size: 14px;
+  line-height: 18px;
+  color: var(--color-graphite);
+}
+
+.totalRow {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  padding-block: 12px;
+  border-top: 1px solid var(--color-dust);
+  border-bottom: 1px solid var(--color-dust);
+}
+
+.totalLabel {
+  font-size: 15px;
+  line-height: 18px;
+  color: var(--color-graphite);
+}
+
+.totalValue {
+  font-family: var(--font-mono);
+  font-size: 19px;
+  line-height: 24px;
+  color: var(--color-slate);
+}
+
+.buyAction {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  padding: 14px;
+  background: var(--color-copper);
+  color: #ffffff;
+  font-size: 15px;
+  line-height: 18px;
+  font-weight: 700;
+  transition: background-color 0.25s ease;
+}
+
+.buyAction:hover {
+  background: #185849;
+}
+
+.buyNote {
+  text-align: center;
+  font-size: 13px;
+  line-height: 21px;
+  color: var(--color-graphite);
+}
+
+/* --- registry panel ------------------------------------------------------ */
+
+.registry {
+  display: flex;
+  flex-direction: column;
+  gap: 14px;
+  width: 100%;
+  padding: 24px;
+  background: var(--color-slate);
+}
+
+.registryTop {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  height: 14px;
+}
+
+.registryLabel {
+  font-family: var(--font-mono);
+  font-size: 11px;
+  line-height: 14px;
+  letter-spacing: 0.1em;
+  color: var(--ink-mint);
+}
+
+.registryChecked {
+  font-family: var(--font-mono);
+  font-size: 10px;
+  line-height: 12px;
+  color: var(--ink-text-faint);
+}
+
+.registryNote {
+  font-size: 15px;
+  line-height: 24px;
+  color: var(--ink-text-dim);
+}
+
+.registryRows {
+  display: flex;
+  flex-direction: column;
+}
+
+.registryRow {
+  display: flex;
+  justify-content: space-between;
+  gap: 16px;
+  padding-block: 11px;
+  border-bottom: 1px solid var(--ink-rule);
+}
+
+.registryRows > .registryRow:last-child {
+  border-bottom: 0;
+}
+
+.registryRowLabel {
+  font-size: 14px;
+  line-height: 18px;
+  color: var(--ink-text-muted);
+}
+
+.registryRowValue {
+  font-size: 14px;
+  line-height: 18px;
+  color: var(--ink-text);
+  text-align: right;
+}
+
+.registryRowValue[data-mono='true'] {
+  font-family: var(--font-mono);
+}
+
+.registryAction {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  margin-top: 4px;
+  padding: 12px;
+  background: #ffffff;
+  font-size: 14px;
+  line-height: 18px;
+  font-weight: 600;
+  color: var(--color-slate);
+  transition: transform 0.25s cubic-bezier(0.16, 1, 0.3, 1);
+}
+
+.registryAction:hover {
+  transform: translateY(-1px);
+}
+
+/* --- advisory ------------------------------------------------------------ */
+
+.advisory {
+  display: flex;
+  flex-direction: column;
+  gap: 10px;
+  width: 100%;
+  padding: 22px;
+  background: var(--color-oxide-tint);
+  border: 1px solid var(--color-oxide);
+}
+
+.advisoryLabel {
+  font-family: var(--font-mono);
+  font-size: 10px;
+  line-height: 12px;
+  letter-spacing: 0.1em;
+  color: var(--color-oxide);
+}
+
+.advisoryBody {
+  font-size: 15px;
+  line-height: 24px;
+  color: var(--color-slate);
+}
+
+.advisoryAction {
+  font-size: 14px;
+  line-height: 18px;
+  font-weight: 600;
+  color: var(--color-oxide);
+  align-self: flex-start;
+}
+
+/* --- lower tables -------------------------------------------------------- */
+
+.lower {
+  display: flex;
+  align-items: flex-start;
+  gap: 24px;
+  padding-top: 36px;
+  padding-bottom: 70px;
+}
+
+.lowerColumn {
+  flex: 1;
+  display: flex;
+  flex-direction: column;
+  gap: 22px;
+  width: 100%;
+}
+
+.docRow {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 20px;
+  padding-block: 15px;
+  padding-inline: 24px;
+  border-bottom: 1px solid var(--color-dust);
+  transition: background-color 0.25s ease;
+}
+
+.table > .docRow:last-child {
+  border-bottom: 0;
+}
+
+.docRow:hover {
+  background: var(--color-limestone);
+}
+
+.docIdentity {
+  display: flex;
+  align-items: center;
+  gap: 14px;
+}
+
+.docKind {
+  width: 34px;
+  flex-shrink: 0;
+  font-family: var(--font-mono);
+  font-size: 11px;
+  line-height: 14px;
+  color: var(--color-graphite);
+}
+
+.docTitle {
+  font-size: 15px;
+  line-height: 18px;
+  color: var(--color-slate);
+}
+
+.docAction {
+  font-size: 14px;
+  line-height: 18px;
+  font-weight: 600;
+  color: var(--color-copper);
+}
+
+@media (max-width: 1200px) {
+  .layout {
+    flex-wrap: wrap;
+    gap: 32px;
+  }
+  .main,
+  .rail {
+    width: auto;
+    flex: 1 1 420px;
+    /* Without this a flex item refuses to shrink below its content's
+       min-content width, and the 560px thumbnail rail widens the page. */
+    min-width: 0;
+    position: static;
+  }
+  .gallery,
+  .thumbs {
+    min-width: 0;
+  }
+  .title {
+    font-size: 36px;
+    line-height: 38px;
+  }
+}
+
+@media (max-width: 820px) {
+  .stage {
+    height: 260px;
+  }
+  .arrow {
+    top: 108px;
+  }
+  .specRow {
+    flex-direction: column;
+    align-items: flex-start;
+    gap: 4px;
+  }
+  .specLabel {
+    width: auto;
+  }
+  .galleryMeta {
+    flex-direction: column;
+    align-items: flex-start;
+    gap: 6px;
+  }
+}

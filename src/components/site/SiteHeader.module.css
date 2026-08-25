@@ -1,0 +1,136 @@
+/* Nav — Paper node "Nav": limestone ground, 1px dust rule, 26px/88px padding. */
+
+.header {
+  position: sticky;
+  top: 0;
+  z-index: 40;
+  background: var(--color-limestone);
+  border-bottom: 1px solid var(--color-dust);
+}
+
+/* On scroll the bar tightens a little and picks up a shadow. The resting
+   state is exactly the design. */
+.header[data-stuck='true'] {
+  background: color-mix(in srgb, var(--color-limestone) 88%, transparent);
+  backdrop-filter: saturate(140%) blur(10px);
+  box-shadow: 0 1px 0 var(--color-dust), 0 10px 30px rgba(18, 18, 15, 0.06);
+}
+
+.inner {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  padding-block: 26px;
+  transition: padding-block 0.3s cubic-bezier(0.16, 1, 0.3, 1);
+}
+
+.header[data-stuck='true'] .inner {
+  padding-block: 16px;
+}
+
+.brand {
+  display: flex;
+  align-items: baseline;
+  gap: 14px;
+}
+
+.wordmark {
+  font-family: var(--font-display);
+  font-size: 21px;
+  line-height: 26px;
+  font-weight: 800;
+  letter-spacing: -0.02em;
+  font-stretch: 125%;
+  font-variation-settings: 'wdth' 125;
+  color: var(--color-slate);
+  white-space: nowrap;
+}
+
+.tagline {
+  font-family: var(--font-mono);
+  font-size: 11px;
+  line-height: 14px;
+  letter-spacing: 0.1em;
+  color: var(--color-graphite);
+  white-space: nowrap;
+}
+
+.menu {
+  display: flex;
+  align-items: center;
+  gap: 20px;
+}
+
+/* The blog and marketplace artboards set this gap to 34px / 32px. */
+.menu[data-spacing='wide'] {
+  gap: 34px;
+}
+
+.link {
+  position: relative;
+  font-size: 15px;
+  line-height: 18px;
+  font-weight: 500;
+  color: var(--color-slate);
+  white-space: nowrap;
+}
+
+/* Underline grows from the left on hover and stays for the current page. */
+.link::after {
+  content: '';
+  position: absolute;
+  left: 0;
+  right: 0;
+  bottom: -6px;
+  height: 1px;
+  background: var(--color-copper);
+  transform: scaleX(0);
+  transform-origin: left center;
+  transition: transform 0.32s cubic-bezier(0.16, 1, 0.3, 1);
+}
+
+.link:hover::after,
+.link[data-current='true']::after {
+  transform: scaleX(1);
+}
+
+.cta {
+  display: flex;
+  align-items: center;
+  padding-block: 11px;
+  padding-inline: 20px;
+  background: var(--color-copper);
+  color: #ffffff;
+  font-size: 14px;
+  line-height: 18px;
+  font-weight: 600;
+  white-space: nowrap;
+  transition: background-color 0.25s ease, transform 0.25s cubic-bezier(0.16, 1, 0.3, 1);
+}
+
+.cta:hover {
+  background: #185849;
+  transform: translateY(-1px);
+}
+
+.cta:active {
+  transform: translateY(0);
+}
+
+@media (max-width: 820px) {
+  .tagline {
+    display: none;
+  }
+  .menu {
+    gap: 14px;
+  }
+  .link {
+    font-size: 14px;
+  }
+}
+
+@media (max-width: 620px) {
+  .menu .link {
+    display: none;
+  }
+}

@@ -1,0 +1,629 @@
+/* Orders — Paper artboard "07 Orders". */
+
+.intro {
+  display: flex;
+  align-items: flex-start;
+  justify-content: space-between;
+  gap: 60px;
+  padding-top: 48px;
+  padding-bottom: 34px;
+}
+
+.introCopy {
+  width: 680px;
+  flex-shrink: 0;
+  display: flex;
+  flex-direction: column;
+  gap: 14px;
+}
+
+.introTitle {
+  margin: 0;
+  font-family: var(--font-display);
+  font-size: 44px;
+  line-height: 44px;
+  font-weight: 800;
+  letter-spacing: -0.022em;
+  font-stretch: 125%;
+  font-variation-settings: 'wdth' 125;
+  color: var(--color-slate);
+}
+
+.primaryAction {
+  flex-shrink: 0;
+  display: flex;
+  align-items: center;
+  padding-block: 15px;
+  padding-inline: 26px;
+  background: var(--color-copper);
+  color: #ffffff;
+  font-family: var(--font-display);
+  font-size: 15px;
+  line-height: 18px;
+  font-weight: 700;
+  transition: background-color 0.25s ease, transform 0.25s cubic-bezier(0.16, 1, 0.3, 1);
+}
+
+.primaryAction:hover {
+  background: #185849;
+  transform: translateY(-1px);
+}
+
+/* --- active order -------------------------------------------------------- */
+
+.active {
+  display: flex;
+  flex-direction: column;
+  background: var(--color-paper);
+  border: 1px solid var(--color-copper);
+}
+
+.activeHead {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 20px;
+  padding-block: 20px;
+  padding-inline: 28px;
+  background: var(--color-copper-tint);
+  border-bottom: 1px solid var(--color-copper);
+}
+
+.activeRef {
+  font-family: var(--font-mono);
+  font-size: 10px;
+  line-height: 12px;
+  letter-spacing: 0.1em;
+  color: var(--color-copper);
+}
+
+.activeTitle {
+  margin-top: 4px;
+  font-size: 19px;
+  line-height: 24px;
+  font-weight: 600;
+  color: var(--color-slate);
+}
+
+.activeTotals {
+  display: flex;
+  flex-direction: column;
+  align-items: flex-end;
+  gap: 3px;
+}
+
+.activeTotal {
+  font-family: var(--font-mono);
+  font-size: 22px;
+  line-height: 28px;
+  color: var(--color-slate);
+}
+
+.activePaid {
+  font-size: 13px;
+  line-height: 16px;
+  color: var(--color-graphite);
+}
+
+.stages {
+  display: flex;
+}
+
+.stage {
+  flex: 1;
+  display: flex;
+  flex-direction: column;
+  gap: 9px;
+  padding-block: 22px;
+  padding-inline: 24px;
+}
+
+.stage[data-state='active'] {
+  background: var(--color-brass-tint);
+}
+
+.stageBar {
+  height: 4px;
+  flex-shrink: 0;
+  background: var(--color-dust);
+  transform-origin: left center;
+}
+
+.stage[data-state='done'] .stageBar {
+  background: var(--color-copper);
+}
+
+.stage[data-state='active'] .stageBar {
+  background: var(--color-brass);
+}
+
+.stageTop {
+  display: flex;
+  align-items: center;
+  gap: 7px;
+}
+
+.stageMark {
+  font-family: var(--font-mono);
+  font-size: 12px;
+  line-height: 16px;
+  color: var(--color-copper);
+}
+
+.stage[data-state='active'] .stageMark {
+  color: var(--color-brass);
+}
+
+.stage[data-state='waiting'] .stageMark {
+  color: var(--color-graphite);
+}
+
+.stageTitle {
+  font-size: 15px;
+  line-height: 18px;
+  font-weight: 600;
+  color: var(--color-slate);
+}
+
+.stage[data-state='waiting'] .stageTitle {
+  color: var(--color-graphite);
+}
+
+.stageBody {
+  font-size: 13px;
+  line-height: 21px;
+  color: var(--color-graphite);
+}
+
+.stageStamp {
+  font-family: var(--font-mono);
+  font-size: 11px;
+  line-height: 14px;
+  color: var(--color-graphite);
+}
+
+.stage[data-state='active'] .stageStamp {
+  color: var(--color-brass);
+}
+
+.activeFoot {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 20px;
+  padding-block: 16px;
+  padding-inline: 28px;
+  background: var(--color-limestone);
+  border-top: 1px solid var(--color-dust);
+}
+
+.activeNote {
+  font-size: 14px;
+  line-height: 18px;
+  color: var(--color-graphite);
+}
+
+.activeActions {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+}
+
+.ghost {
+  padding-block: 9px;
+  padding-inline: 16px;
+  background: var(--color-paper);
+  border: 1px solid var(--color-dust);
+  font-size: 14px;
+  line-height: 18px;
+  color: var(--color-slate);
+  transition: border-color 0.25s ease;
+}
+
+.ghost:hover {
+  border-color: var(--color-slate);
+}
+
+/* --- history ------------------------------------------------------------- */
+
+.history {
+  display: flex;
+  flex-direction: column;
+  padding-top: 44px;
+  padding-bottom: 60px;
+}
+
+.sectionLabel {
+  padding-bottom: 16px;
+  font-family: var(--font-mono);
+  font-size: 11px;
+  line-height: 14px;
+  letter-spacing: 0.11em;
+  color: var(--color-graphite);
+}
+
+.table {
+  display: flex;
+  flex-direction: column;
+  background: var(--color-paper);
+  border: 1px solid var(--color-dust);
+}
+
+.tableHead,
+.tableRow {
+  display: flex;
+  align-items: center;
+  padding-block: 14px;
+  padding-inline: 26px;
+  border-bottom: 1px solid var(--color-dust);
+}
+
+.tableHead {
+  background: var(--color-limestone);
+}
+
+.tableRow {
+  padding-block: 18px;
+  transition: background-color 0.25s ease;
+}
+
+.table > .tableRow:last-child {
+  border-bottom: 0;
+}
+
+.tableRow:hover {
+  background: var(--color-limestone);
+}
+
+.headCell {
+  font-family: var(--font-mono);
+  font-size: 11px;
+  line-height: 14px;
+  letter-spacing: 0.1em;
+  color: var(--color-graphite);
+}
+
+.colWhat {
+  flex: 1.6;
+  display: flex;
+  flex-direction: column;
+  gap: 2px;
+}
+
+.colOrdered {
+  flex: 1;
+}
+
+.colTonnes {
+  width: 110px;
+  flex-shrink: 0;
+  text-align: right;
+}
+
+.colStatus {
+  width: 140px;
+  flex-shrink: 0;
+  display: flex;
+  justify-content: flex-end;
+  text-align: right;
+}
+
+.colCertificate {
+  width: 150px;
+  flex-shrink: 0;
+  text-align: right;
+}
+
+.rowTitle {
+  font-size: 16px;
+  line-height: 20px;
+  color: var(--color-slate);
+}
+
+.rowSerial {
+  font-family: var(--font-mono);
+  font-size: 12px;
+  line-height: 16px;
+  color: var(--color-graphite);
+}
+
+.rowMuted {
+  font-size: 15px;
+  line-height: 18px;
+  color: var(--color-graphite);
+}
+
+.rowFigure {
+  font-family: var(--font-mono);
+  font-size: 15px;
+  line-height: 18px;
+  color: var(--color-slate);
+}
+
+.pill {
+  padding-block: 5px;
+  padding-inline: 11px;
+  font-size: 13px;
+  line-height: 16px;
+}
+
+.pill[data-tone='copper'] {
+  background: var(--color-copper-tint);
+  color: var(--color-copper);
+}
+
+.pill[data-tone='oxide'] {
+  background: var(--color-oxide-tint);
+  color: var(--color-oxide);
+}
+
+.pill[data-tone='brass'] {
+  background: var(--color-brass-tint);
+  color: var(--color-brass);
+}
+
+.certificate {
+  font-size: 15px;
+  line-height: 18px;
+  color: var(--color-graphite);
+}
+
+.certificate[data-emphasis='true'] {
+  color: var(--color-copper);
+  font-weight: 600;
+}
+
+/* --- pull note ----------------------------------------------------------- */
+
+.note {
+  display: flex;
+  align-items: flex-start;
+  gap: 16px;
+  margin-top: 26px;
+  padding-left: 18px;
+  border-left: 2px solid var(--color-oxide);
+}
+
+.note[data-tone='copper'] {
+  border-left-color: var(--color-copper);
+  margin-top: 24px;
+}
+
+.noteCopy {
+  display: flex;
+  flex-direction: column;
+  gap: 6px;
+}
+
+.noteTitle {
+  font-size: 16px;
+  line-height: 20px;
+  font-weight: 600;
+  color: var(--color-slate);
+}
+
+.noteBody {
+  max-width: 900px;
+  font-size: 15px;
+  line-height: 25px;
+  color: var(--color-graphite);
+}
+
+/* --- sell side ----------------------------------------------------------- */
+
+.sell {
+  display: flex;
+  flex-direction: column;
+  padding-top: 48px;
+  padding-bottom: 70px;
+  border-top: 1px solid var(--color-dust);
+}
+
+.sellHead {
+  display: flex;
+  align-items: flex-start;
+  justify-content: space-between;
+  gap: 60px;
+  padding-bottom: 26px;
+}
+
+.sellCopy {
+  width: 660px;
+  flex-shrink: 0;
+  display: flex;
+  flex-direction: column;
+  gap: 14px;
+}
+
+.sellLabel {
+  font-family: var(--font-mono);
+  font-size: 11px;
+  line-height: 14px;
+  letter-spacing: 0.11em;
+  color: var(--color-copper);
+}
+
+.sellTitle {
+  margin: 0;
+  font-family: var(--font-display);
+  font-size: 38px;
+  line-height: 40px;
+  font-weight: 800;
+  letter-spacing: -0.02em;
+  font-stretch: 118%;
+  font-variation-settings: 'wdth' 118;
+  color: var(--color-slate);
+}
+
+.sellBody {
+  font-size: 16px;
+  line-height: 27px;
+  color: var(--color-graphite);
+}
+
+.sellAction {
+  margin-top: 34px;
+}
+
+.terms {
+  display: flex;
+  background: var(--color-paper);
+  border: 1px solid var(--color-dust);
+}
+
+.term {
+  flex: 1;
+  display: flex;
+  flex-direction: column;
+  gap: 8px;
+  padding-block: 24px;
+  padding-inline: 28px;
+}
+
+.termValue {
+  font-family: var(--font-mono);
+  font-size: 26px;
+  line-height: 32px;
+  letter-spacing: -0.02em;
+  color: var(--color-slate);
+}
+
+.termValue[data-accent='true'] {
+  color: var(--color-copper);
+}
+
+.termBody {
+  font-size: 14px;
+  line-height: 22px;
+  color: var(--color-graphite);
+}
+
+.vRule {
+  width: 1px;
+  flex-shrink: 0;
+  background: var(--color-dust);
+}
+
+.listings {
+  display: flex;
+  flex-direction: column;
+  background: var(--color-paper);
+}
+
+.listingsHead,
+.listingRow {
+  display: flex;
+  align-items: center;
+  padding-block: 14px;
+  padding-inline: 28px;
+  border-bottom: 1px solid var(--color-dust);
+}
+
+.listingsHead {
+  background: var(--color-limestone);
+}
+
+.listingRow {
+  padding-block: 18px;
+  transition: background-color 0.25s ease;
+}
+
+.listings > .listingRow:last-child {
+  border-bottom: 0;
+}
+
+.listingRow:hover {
+  background: var(--color-limestone);
+}
+
+.colListing {
+  flex: 1.7;
+  display: flex;
+  flex-direction: column;
+  gap: 2px;
+}
+
+.colTonnesWide,
+.colPrice {
+  width: 130px;
+  flex-shrink: 0;
+}
+
+.colListingStatus {
+  width: 200px;
+  flex-shrink: 0;
+  display: flex;
+  justify-content: flex-end;
+  text-align: right;
+}
+
+.rowFigureMuted {
+  font-family: var(--font-mono);
+  font-size: 15px;
+  line-height: 18px;
+  color: var(--color-graphite);
+}
+
+@media (max-width: 1200px) {
+  .introCopy,
+  .sellCopy {
+    width: auto;
+    flex: 1;
+  }
+  .introTitle {
+    font-size: 36px;
+    line-height: 38px;
+  }
+  .stages {
+    flex-wrap: wrap;
+  }
+  .stage {
+    min-width: 220px;
+  }
+}
+
+@media (max-width: 920px) {
+  .intro,
+  .sellHead,
+  .activeFoot,
+  .activeHead,
+  .terms {
+    flex-direction: column;
+    align-items: stretch;
+    gap: 20px;
+  }
+  .activeTotals {
+    align-items: flex-start;
+  }
+  .primaryAction,
+  .sellAction {
+    align-self: flex-start;
+    margin-top: 0;
+  }
+  .vRule {
+    display: none;
+  }
+  .term {
+    border-bottom: 1px solid var(--color-dust);
+  }
+  .tableHead,
+  .listingsHead {
+    display: none;
+  }
+  .tableRow,
+  .listingRow {
+    flex-direction: column;
+    align-items: flex-start;
+    gap: 8px;
+  }
+  .colTonnes,
+  .colStatus,
+  .colCertificate,
+  .colTonnesWide,
+  .colPrice,
+  .colListingStatus {
+    width: auto;
+    text-align: left;
+    justify-content: flex-start;
+  }
+}

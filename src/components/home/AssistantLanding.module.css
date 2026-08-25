@@ -1,0 +1,165 @@
+/* Assistant landing — Paper artboard "08 AI agent". */
+
+.page {
+  position: relative;
+  /* 900px artboard less the 93px nav, which sits outside this block. */
+  min-height: 807px;
+  overflow: hidden;
+}
+
+.hero {
+  position: relative;
+  height: 560px;
+  display: flex;
+  flex-direction: column;
+  justify-content: flex-end;
+  padding-bottom: 56px;
+  background: var(--ink-bg);
+  overflow: hidden;
+}
+
+.heroCopy {
+  position: relative;
+  display: flex;
+  flex-direction: column;
+  gap: 20px;
+  width: 760px;
+}
+
+.heroTitle {
+  margin: 0;
+  font-family: var(--font-display);
+  font-size: 54px;
+  line-height: 53px;
+  font-weight: 800;
+  letter-spacing: -0.025em;
+  font-stretch: 125%;
+  font-variation-settings: 'wdth' 125;
+  color: #ffffff;
+}
+
+.heroLine {
+  display: block;
+  overflow: hidden;
+}
+
+.heroBody {
+  width: 560px;
+  font-size: 17px;
+  line-height: 28px;
+  color: var(--ink-text-dim);
+}
+
+.stats {
+  display: flex;
+  background: #ffffff;
+  border-bottom: 1px solid var(--color-dust);
+}
+
+.stat {
+  flex: 1;
+  display: flex;
+  flex-direction: column;
+  gap: 8px;
+  padding-block: 30px;
+  padding-inline: 40px;
+}
+
+.stat:first-child {
+  padding-left: var(--spacing-gutter);
+}
+
+.stat:last-child {
+  padding-right: var(--spacing-gutter);
+}
+
+.statValue {
+  font-family: var(--font-mono);
+  font-size: 32px;
+  line-height: 40px;
+  letter-spacing: -0.03em;
+  color: var(--color-slate);
+}
+
+.statValue[data-accent='true'] {
+  color: var(--color-copper);
+}
+
+.statCaption {
+  font-size: 14px;
+  line-height: 18px;
+  color: var(--color-graphite);
+}
+
+.vRule {
+  width: 1px;
+  flex-shrink: 0;
+  background: var(--color-dust);
+}
+
+/* The artboard parks this annotation over the foot of the stat band. */
+.note {
+  position: absolute;
+  left: var(--spacing-gutter);
+  bottom: 36px;
+  width: 560px;
+  max-width: calc(100% - var(--spacing-gutter) * 2);
+  display: flex;
+  flex-direction: column;
+  gap: 6px;
+  padding-block: 18px;
+  padding-inline: 22px;
+  background: var(--color-limestone);
+  border: 1px solid var(--color-dust);
+}
+
+.noteLabel {
+  font-family: var(--font-mono);
+  font-size: 11px;
+  line-height: 14px;
+  letter-spacing: 0.11em;
+  color: var(--color-copper);
+}
+
+.noteBody {
+  font-size: 15px;
+  line-height: 24px;
+  color: var(--color-graphite);
+}
+
+@media (max-width: 1200px) {
+  .heroCopy,
+  .heroBody,
+  .note {
+    width: auto;
+  }
+  /* Below the artboard measure it drops back into the flow so it covers
+     nothing. */
+  .note {
+    position: static;
+    margin: 36px var(--spacing-gutter);
+  }
+  .heroTitle {
+    font-size: 40px;
+    line-height: 42px;
+  }
+}
+
+@media (max-width: 920px) {
+  .stats {
+    flex-direction: column;
+  }
+  .vRule {
+    display: none;
+  }
+  .stat,
+  .stat:first-child,
+  .stat:last-child {
+    padding-inline: var(--spacing-gutter);
+    border-bottom: 1px solid var(--color-dust);
+  }
+  .hero {
+    height: auto;
+    padding-top: 120px;
+  }
+}

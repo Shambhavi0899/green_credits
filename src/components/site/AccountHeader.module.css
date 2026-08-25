@@ -1,0 +1,109 @@
+/* Account chrome — Paper node "07 Orders": slate bar, then a white tab strip. */
+
+.bar {
+  background: var(--color-slate);
+}
+
+.barInner {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  padding-block: 22px;
+}
+
+.brand {
+  display: flex;
+  align-items: baseline;
+  gap: 14px;
+}
+
+.wordmark {
+  font-family: var(--font-display);
+  font-size: 21px;
+  line-height: 26px;
+  font-weight: 800;
+  letter-spacing: -0.02em;
+  font-stretch: 125%;
+  font-variation-settings: 'wdth' 125;
+  color: var(--ink-text);
+}
+
+.tagline {
+  font-family: var(--font-mono);
+  font-size: 11px;
+  line-height: 14px;
+  letter-spacing: 0.08em;
+  color: var(--ink-text-faint);
+}
+
+.account {
+  display: flex;
+  align-items: center;
+  gap: 14px;
+}
+
+.company {
+  font-size: 15px;
+  line-height: 18px;
+  color: var(--ink-text-soft);
+}
+
+.avatar {
+  width: 32px;
+  height: 32px;
+  flex-shrink: 0;
+  border-radius: 16px;
+  background: var(--ink-text);
+  color: var(--color-slate);
+  font-family: var(--font-mono);
+  font-size: 12px;
+  font-weight: 500;
+  line-height: 16px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.tabs {
+  background: var(--color-paper);
+  border-bottom: 1px solid var(--color-dust);
+}
+
+.tabsInner {
+  display: flex;
+  align-items: center;
+}
+
+.tab {
+  position: relative;
+  display: flex;
+  align-items: center;
+  padding-block: 16px;
+  margin-right: 32px;
+  font-size: 15px;
+  line-height: 18px;
+  color: var(--color-graphite);
+  transition: color 0.25s ease;
+}
+
+.tab:last-child {
+  margin-right: 0;
+}
+
+.tab[data-current='true'] {
+  color: var(--color-slate);
+  font-weight: 600;
+}
+
+.tab:hover {
+  color: var(--color-slate);
+}
+
+.tabRule {
+  position: absolute;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  height: 2px;
+  background: var(--color-copper);
+}

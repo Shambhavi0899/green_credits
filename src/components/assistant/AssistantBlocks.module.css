@@ -1,0 +1,744 @@
+/* Message blocks inside the assistant thread. Every value here is read off
+   the Paper artboards for the three assistant states. */
+
+.userRow {
+  display: flex;
+  justify-content: flex-end;
+}
+
+.userBubble {
+  max-width: 300px;
+  padding-block: 11px;
+  padding-inline: 15px;
+  background: var(--color-slate);
+  color: var(--ink-text);
+  font-size: 14px;
+  line-height: 23px;
+}
+
+.reply {
+  color: var(--color-slate);
+  font-size: 14px;
+  line-height: 24px;
+}
+
+/* --- shortlist ----------------------------------------------------------- */
+
+.shortlist {
+  display: flex;
+  flex-direction: column;
+  gap: 7px;
+  padding-block: 12px;
+  padding-inline: 14px;
+  background: var(--color-limestone);
+  border-left: 2px solid var(--color-copper);
+}
+
+.shortlistLabel {
+  font-family: var(--font-mono);
+  font-size: 9px;
+  line-height: 12px;
+  letter-spacing: 0.1em;
+  color: var(--color-copper);
+}
+
+.segments {
+  display: flex;
+  align-items: center;
+  gap: 5px;
+}
+
+.segment {
+  flex: 1;
+  height: 4px;
+  background: var(--color-dust);
+  transform-origin: left center;
+}
+
+.segment[data-filled='true'] {
+  background: var(--color-copper);
+}
+
+.shortlistLine {
+  font-size: 13px;
+  line-height: 16px;
+  color: var(--color-slate);
+}
+
+/* --- blog link ----------------------------------------------------------- */
+
+.blogLink {
+  display: flex;
+  align-items: center;
+  gap: 9px;
+  padding-block: 11px;
+  padding-inline: 13px;
+  background: #ffffff;
+  border: 1px solid var(--color-dust);
+  transition: border-color 0.2s ease;
+}
+
+.blogLink:hover {
+  border-color: var(--color-copper);
+}
+
+.blogLinkLabel {
+  flex-shrink: 0;
+  font-family: var(--font-mono);
+  font-size: 9px;
+  line-height: 12px;
+  letter-spacing: 0.1em;
+  color: var(--color-graphite);
+}
+
+.blogLinkTitle {
+  flex: 1;
+  font-size: 13px;
+  line-height: 16px;
+  color: var(--color-copper);
+}
+
+/* --- order draft --------------------------------------------------------- */
+
+.draft {
+  display: flex;
+  flex-direction: column;
+  gap: 9px;
+  padding: 14px;
+  background: var(--color-copper-tint);
+  border: 1px solid var(--color-copper);
+}
+
+.draftLabel {
+  font-family: var(--font-mono);
+  font-size: 9px;
+  line-height: 12px;
+  letter-spacing: 0.1em;
+  color: var(--color-copper);
+}
+
+.draftRow {
+  display: flex;
+  align-items: baseline;
+  justify-content: space-between;
+}
+
+.draftSeller {
+  font-size: 15px;
+  line-height: 18px;
+  font-weight: 600;
+  color: var(--color-slate);
+}
+
+.draftTonnes {
+  font-family: var(--font-mono);
+  font-size: 13px;
+  line-height: 16px;
+  color: var(--color-graphite);
+}
+
+.draftTotalRow {
+  display: flex;
+  align-items: baseline;
+  justify-content: space-between;
+  padding-top: 8px;
+  border-top: 1px solid #1f6b5b40;
+}
+
+.draftTotalLabel {
+  font-size: 14px;
+  line-height: 18px;
+  color: var(--color-graphite);
+}
+
+.draftTotal {
+  font-family: var(--font-mono);
+  font-size: 20px;
+  line-height: 24px;
+  color: var(--color-slate);
+}
+
+.draftAction {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  padding: 11px;
+  margin-top: 2px;
+  background: var(--color-copper);
+  color: #ffffff;
+  font-size: 14px;
+  line-height: 18px;
+  font-weight: 600;
+  transition: background-color 0.2s ease;
+}
+
+.draftAction:hover {
+  background: #185849;
+}
+
+.draftFootnote {
+  text-align: center;
+  font-size: 12px;
+  line-height: 19px;
+  color: var(--color-graphite);
+}
+
+/* --- credit explainer card ----------------------------------------------- */
+
+.creditCard {
+  display: flex;
+  flex-direction: column;
+  border: 1px solid var(--color-dust);
+  overflow: hidden;
+}
+
+.creditHead {
+  display: flex;
+  align-items: center;
+  gap: 18px;
+  padding: 20px;
+  background: var(--color-copper-tint);
+}
+
+.creditBadge {
+  width: 74px;
+  height: 74px;
+  flex-shrink: 0;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  background: var(--color-copper);
+  color: #ffffff;
+  font-family: var(--font-mono);
+  font-size: 22px;
+  line-height: 28px;
+}
+
+.creditCopy {
+  display: flex;
+  flex-direction: column;
+  gap: 5px;
+  flex: 1;
+}
+
+.creditTitle {
+  font-size: 16px;
+  line-height: 20px;
+  font-weight: 600;
+  color: var(--color-slate);
+}
+
+.creditBody {
+  font-size: 13px;
+  line-height: 21px;
+  color: var(--color-graphite);
+}
+
+.creditFacts {
+  display: flex;
+  align-items: center;
+  padding-block: 14px;
+  padding-inline: 20px;
+  border-top: 1px solid var(--color-dust);
+}
+
+.creditFact {
+  flex: 1;
+  display: flex;
+  flex-direction: column;
+  gap: 3px;
+}
+
+.creditFact + .creditFact {
+  padding-left: 16px;
+}
+
+.creditFactTitle {
+  font-family: var(--font-mono);
+  font-size: 13px;
+  line-height: 16px;
+  color: var(--color-slate);
+}
+
+.creditFactCaption {
+  font-size: 12px;
+  line-height: 16px;
+  color: var(--color-graphite);
+}
+
+.creditFactRule {
+  width: 1px;
+  height: 30px;
+  flex-shrink: 0;
+  background: var(--color-dust);
+}
+
+/* --- price bars ---------------------------------------------------------- */
+
+.bars {
+  display: flex;
+  flex-direction: column;
+  gap: 14px;
+  padding-block: 18px;
+  padding-inline: 20px;
+  border: 1px solid var(--color-dust);
+}
+
+.barsLabel {
+  font-family: var(--font-mono);
+  font-size: 9px;
+  line-height: 12px;
+  letter-spacing: 0.1em;
+  color: var(--color-copper);
+}
+
+.barsList {
+  display: flex;
+  flex-direction: column;
+  gap: 12px;
+}
+
+.bar {
+  display: flex;
+  flex-direction: column;
+  gap: 6px;
+}
+
+.barTop {
+  display: flex;
+  align-items: baseline;
+  justify-content: space-between;
+}
+
+.barName {
+  font-size: 13px;
+  line-height: 16px;
+  color: var(--color-slate);
+}
+
+.barPrice {
+  font-family: var(--font-mono);
+  font-size: 13px;
+  line-height: 16px;
+}
+
+.barPrice[data-tone='brass'] {
+  color: var(--color-graphite);
+}
+
+.barPrice[data-tone='copper'] {
+  color: var(--color-copper);
+}
+
+.barPrice[data-tone='slate'] {
+  color: var(--color-slate);
+}
+
+.barTrack {
+  display: flex;
+  height: 9px;
+  background: var(--color-dust);
+}
+
+.barFill {
+  height: 9px;
+  transform-origin: left center;
+}
+
+.barFill[data-tone='brass'] {
+  background: var(--color-brass);
+}
+
+.barFill[data-tone='copper'] {
+  background: var(--color-copper);
+}
+
+.barFill[data-tone='slate'] {
+  background: var(--color-slate);
+}
+
+.barsFootnote {
+  padding-top: 2px;
+  font-size: 12px;
+  line-height: 19px;
+  color: var(--color-graphite);
+}
+
+/* --- perspective --------------------------------------------------------- */
+
+.perspective {
+  display: flex;
+  flex-direction: column;
+  gap: 12px;
+  padding-block: 18px;
+  padding-inline: 20px;
+  background: var(--color-slate);
+}
+
+.perspectiveLabel {
+  font-family: var(--font-mono);
+  font-size: 9px;
+  line-height: 12px;
+  letter-spacing: 0.1em;
+  color: var(--ink-mint);
+}
+
+.perspectiveFigure {
+  display: flex;
+  align-items: baseline;
+  gap: 10px;
+}
+
+.perspectiveValue {
+  font-family: var(--font-mono);
+  font-size: 28px;
+  line-height: 34px;
+  letter-spacing: -0.02em;
+  color: var(--ink-text);
+}
+
+.perspectiveCaption {
+  font-size: 13px;
+  line-height: 16px;
+  color: var(--ink-text-muted);
+}
+
+.perspectiveGrid {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 3px;
+}
+
+.perspectiveTick {
+  width: 8px;
+  height: 13px;
+  flex-shrink: 0;
+  background: var(--ink-mint-dim);
+}
+
+.perspectiveTick[data-filled='true'] {
+  background: var(--ink-mint-bright);
+}
+
+/* --- order tracking ------------------------------------------------------ */
+
+.track {
+  display: flex;
+  flex-direction: column;
+  border: 1px solid var(--color-dust);
+  overflow: hidden;
+}
+
+.trackHead {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  padding-block: 15px;
+  padding-inline: 18px;
+  background: var(--color-limestone);
+  border-bottom: 1px solid var(--color-dust);
+}
+
+.trackRef {
+  font-family: var(--font-mono);
+  font-size: 9px;
+  line-height: 12px;
+  letter-spacing: 0.1em;
+  color: var(--color-graphite);
+}
+
+.trackTitle {
+  font-size: 15px;
+  line-height: 18px;
+  font-weight: 600;
+  color: var(--color-slate);
+  margin-top: 3px;
+}
+
+.trackTotal {
+  font-family: var(--font-mono);
+  font-size: 16px;
+  line-height: 20px;
+  color: var(--color-slate);
+}
+
+.trackSteps {
+  display: flex;
+  flex-direction: column;
+  padding-block: 16px;
+  padding-inline: 18px;
+}
+
+.trackStep {
+  display: flex;
+  align-items: center;
+  gap: 13px;
+  padding-block: 9px;
+}
+
+.trackStep[data-state='active'] {
+  background: var(--color-brass-tint);
+  padding-block: 11px;
+  padding-inline: 12px;
+  margin-block: 4px;
+}
+
+.trackDot {
+  width: 22px;
+  height: 22px;
+  flex-shrink: 0;
+  border-radius: 12px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-family: var(--font-mono);
+  color: #ffffff;
+}
+
+.trackDot[data-state='done'] {
+  background: var(--color-copper);
+  font-size: 11px;
+  line-height: 14px;
+}
+
+.trackDot[data-state='active'] {
+  background: var(--color-brass);
+  font-size: 9px;
+  line-height: 12px;
+}
+
+.trackDot[data-state='waiting'] {
+  background: transparent;
+  border: 1px solid var(--color-dust);
+}
+
+.trackBody {
+  flex: 1;
+  display: flex;
+  flex-direction: column;
+  gap: 2px;
+}
+
+.trackStepTitle {
+  font-size: 14px;
+  line-height: 18px;
+  color: var(--color-slate);
+}
+
+.trackStep[data-state='active'] .trackStepTitle {
+  font-weight: 600;
+}
+
+.trackStep[data-state='waiting'] .trackStepTitle {
+  color: var(--color-graphite);
+}
+
+.trackStepCaption {
+  font-size: 12px;
+  line-height: 16px;
+  color: var(--color-graphite);
+}
+
+.trackStamp {
+  font-family: var(--font-mono);
+  font-size: 11px;
+  line-height: 14px;
+  color: var(--color-graphite);
+}
+
+.trackStep[data-state='active'] .trackStamp {
+  color: var(--color-brass);
+}
+
+.trackFooter {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  padding-block: 13px;
+  padding-inline: 18px;
+  background: var(--color-limestone);
+  border-top: 1px solid var(--color-dust);
+}
+
+.trackAvatar {
+  width: 26px;
+  height: 26px;
+  flex-shrink: 0;
+  border-radius: 14px;
+  background: var(--color-slate);
+  color: var(--ink-text);
+  font-family: var(--font-mono);
+  font-size: 10px;
+  line-height: 12px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.trackHandler {
+  flex: 1;
+  font-size: 13px;
+  line-height: 16px;
+  color: var(--color-graphite);
+}
+
+.trackAction {
+  font-size: 13px;
+  line-height: 16px;
+  font-weight: 600;
+  color: var(--color-copper);
+}
+
+/* --- email toggle -------------------------------------------------------- */
+
+.emailToggle {
+  display: flex;
+  align-items: center;
+  gap: 14px;
+  padding-block: 16px;
+  padding-inline: 18px;
+  background: var(--color-copper-tint);
+  border: 1px solid var(--color-copper);
+}
+
+.emailCopy {
+  flex: 1;
+  display: flex;
+  flex-direction: column;
+  gap: 3px;
+}
+
+.emailTitle {
+  font-size: 14px;
+  line-height: 18px;
+  font-weight: 600;
+  color: var(--color-slate);
+}
+
+.emailAddress {
+  font-size: 12px;
+  line-height: 16px;
+  color: var(--color-graphite);
+}
+
+.switch {
+  width: 44px;
+  height: 24px;
+  flex-shrink: 0;
+  border-radius: 14px;
+  padding: 3px;
+  display: flex;
+  align-items: center;
+  background: var(--color-copper);
+  transition: background-color 0.25s ease;
+}
+
+.switch[data-on='false'] {
+  background: var(--color-dust);
+}
+
+.switchKnob {
+  width: 18px;
+  height: 18px;
+  border-radius: 10px;
+  background: #ffffff;
+}
+
+/* --- document bundle ----------------------------------------------------- */
+
+.bundle {
+  display: flex;
+  flex-direction: column;
+  border: 1px solid var(--color-dust);
+}
+
+.bundleHead {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  padding-block: 14px;
+  padding-inline: 18px;
+  background: var(--color-limestone);
+  border-bottom: 1px solid var(--color-dust);
+}
+
+.bundleLabel {
+  font-family: var(--font-mono);
+  font-size: 9px;
+  line-height: 12px;
+  letter-spacing: 0.1em;
+  color: var(--color-graphite);
+}
+
+.bundleVolume {
+  font-family: var(--font-mono);
+  font-size: 12px;
+  line-height: 16px;
+  color: var(--color-slate);
+}
+
+.bundleRow {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+  padding-block: 13px;
+  padding-inline: 18px;
+  border-bottom: 1px solid var(--color-dust);
+}
+
+.bundleKind {
+  width: 30px;
+  flex-shrink: 0;
+  font-family: var(--font-mono);
+  font-size: 10px;
+  line-height: 12px;
+  color: var(--color-graphite);
+}
+
+.bundleTitle {
+  flex: 1;
+  font-size: 14px;
+  line-height: 18px;
+  color: var(--color-slate);
+}
+
+.bundleAction {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  padding: 12px;
+  background: var(--color-slate);
+  color: var(--ink-text);
+  font-size: 13px;
+  line-height: 16px;
+  font-weight: 600;
+  transition: background-color 0.2s ease;
+}
+
+.bundleAction:hover {
+  background: #14171a;
+}
+
+/* --- suggestions --------------------------------------------------------- */
+
+.suggestions {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 7px;
+}
+
+.suggestion {
+  padding-block: 8px;
+  padding-inline: 13px;
+  background: var(--color-limestone);
+  border: 1px solid var(--color-dust);
+  font-size: 13px;
+  line-height: 16px;
+  color: var(--color-slate);
+  transition: border-color 0.2s ease, color 0.2s ease;
+}
+
+.suggestion:hover {
+  border-color: var(--color-copper);
+  color: var(--color-copper);
+}

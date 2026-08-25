@@ -1,0 +1,292 @@
+/* =========================================================================
+   Green Credit — design tokens
+   Values are lifted verbatim from the Paper file's token set so the build
+   and the design stay in lockstep. Do not invent values here; if something
+   is missing, read it off the design first.
+   ========================================================================= */
+
+:root {
+  /* Palette — exactly the Paper tokens */
+  --color-limestone: #efeee9;
+  --color-paper: #ffffff;
+  --color-slate: #23262a;
+  --color-graphite: #5c6167;
+  --color-dust: #dad8d1;
+  --color-copper: #1f6b5b;
+  --color-copper-tint: #dbe9e4;
+  --color-brass: #96702a;
+  --color-brass-tint: #f4e9d2;
+  --color-oxide: #a6402b;
+  --color-oxide-tint: #f4dfd9;
+
+  /* Literals the design uses on dark ground. Named here so the components
+     never carry raw hex around. */
+  --ink-bg: #1a1d20;
+  --ink-surface: #22262b;
+  --ink-rule: #3a3e44;
+  --ink-text: #f2f1ec;
+  --ink-text-strong: #ffffff;
+  --ink-text-soft: #d3d7da;
+  --ink-text-dim: #c8cccf;
+  --ink-text-muted: #a8adb3;
+  --ink-text-faint: #8e949a;
+  --ink-mint: #7fc4ae;
+  --ink-mint-bright: #5cbc8d;
+  --ink-mint-dim: #3a5f4e;
+
+  /* On the copper block */
+  --copper-text-soft: #d6ebe2;
+  --copper-text-muted: #9fd6c2;
+
+  /* Type */
+  --font-display: var(--font-archivo), system-ui, sans-serif;
+  --font-body: system-ui, -apple-system, "Segoe UI", Roboto, sans-serif;
+  --font-mono: var(--font-geist-mono), ui-monospace, "SFMono-Regular", monospace;
+
+  --text-label: 12px;
+  --text-small: 14px;
+  --text-body: 16px;
+  --text-lead: 19px;
+  --text-display: 58px;
+
+  /* Layout */
+  --spacing-gutter: 88px;
+  --radius-field: 3px;
+  --page-width: 1440px;
+}
+
+/* ========================================================================= */
+
+*,
+*::before,
+*::after {
+  box-sizing: border-box;
+}
+
+html {
+  scroll-behavior: smooth;
+  -webkit-text-size-adjust: 100%;
+}
+
+body {
+  margin: 0;
+  background: var(--color-limestone);
+  color: var(--color-slate);
+  font-family: var(--font-body);
+  font-size: var(--text-body);
+  font-synthesis: none;
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
+}
+
+img {
+  display: block;
+  max-width: 100%;
+}
+
+figure,
+figcaption,
+p,
+h1,
+h2,
+h3 {
+  margin: 0;
+}
+
+a {
+  color: inherit;
+  text-decoration: none;
+}
+
+button {
+  font: inherit;
+  color: inherit;
+  border: 0;
+  background: none;
+  padding: 0;
+  cursor: pointer;
+}
+
+input {
+  font: inherit;
+  color: inherit;
+}
+
+::selection {
+  background: var(--color-copper-tint);
+  color: var(--color-copper);
+}
+
+:focus-visible {
+  outline: 2px solid var(--color-copper);
+  outline-offset: 2px;
+}
+
+/* -------------------------------------------------------------------------
+   Shared layout primitives
+   ------------------------------------------------------------------------- */
+
+/* The design is drawn on a 1440px artboard with 88px gutters. The shell keeps
+   that measure centred and lets the gutter shrink on narrower viewports so
+   nothing clips. */
+/* The whole site sits on the 1440 artboard measure, centred, exactly as
+   drawn. Colour bands stop with it rather than bleeding to the window edge. */
+.page-shell {
+  position: relative;
+  width: 100%;
+  max-width: var(--page-width);
+  margin-inline: auto;
+  background: var(--color-limestone);
+}
+
+.shell {
+  width: 100%;
+  max-width: var(--page-width);
+  margin-inline: auto;
+}
+
+.gutter {
+  padding-inline: var(--spacing-gutter);
+}
+
+.eyebrow {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+}
+
+.eyebrow__rule {
+  width: 26px;
+  height: 1px;
+  flex-shrink: 0;
+  background: var(--color-copper);
+  transform-origin: left center;
+}
+
+.eyebrow__text {
+  font-family: var(--font-mono);
+  font-size: 12px;
+  line-height: 16px;
+  letter-spacing: 0.12em;
+  color: var(--color-copper);
+}
+
+/* Display type. Archivo is loaded as a variable font; the design pins the
+   width axis per element, so every display size states its own `wdth`. */
+.display {
+  font-family: var(--font-display);
+  font-weight: 800;
+  letter-spacing: -0.022em;
+  color: var(--color-slate);
+  margin: 0;
+}
+
+.section-title {
+  font-family: var(--font-display);
+  font-size: 50px;
+  line-height: 50px;
+  font-weight: 800;
+  letter-spacing: -0.022em;
+  font-stretch: 125%;
+  font-variation-settings: "wdth" 125;
+  color: var(--color-slate);
+  margin: 0;
+}
+
+.lede {
+  font-size: 17px;
+  line-height: 28px;
+  color: var(--color-graphite);
+  margin: 0;
+}
+
+.mono {
+  font-family: var(--font-mono);
+}
+
+/* -------------------------------------------------------------------------
+   Keyframes used by the non-Framer bits (pulses, shimmers, carets)
+   ------------------------------------------------------------------------- */
+
+@keyframes gc-ping {
+  0% {
+    transform: scale(1);
+    opacity: 0.55;
+  }
+  70% {
+    transform: scale(2.1);
+    opacity: 0;
+  }
+  100% {
+    transform: scale(2.1);
+    opacity: 0;
+  }
+}
+
+@keyframes gc-blink {
+  0%,
+  49% {
+    opacity: 1;
+  }
+  50%,
+  100% {
+    opacity: 0;
+  }
+}
+
+@keyframes gc-drift {
+  from {
+    transform: scale(1.06) translate3d(0, 0, 0);
+  }
+  to {
+    transform: scale(1.14) translate3d(0, -1.4%, 0);
+  }
+}
+
+@keyframes gc-sheen {
+  from {
+    transform: translateX(-120%);
+  }
+  to {
+    transform: translateX(220%);
+  }
+}
+
+/* -------------------------------------------------------------------------
+   Responsive fallbacks. The artboard is 1440 wide; below that the gutter
+   tightens and the two-column blocks stack, so nothing is ever cut off.
+   ------------------------------------------------------------------------- */
+
+@media (max-width: 1200px) {
+  :root {
+    --spacing-gutter: 48px;
+  }
+  .section-title {
+    font-size: 42px;
+    line-height: 44px;
+  }
+}
+
+@media (max-width: 820px) {
+  :root {
+    --spacing-gutter: 24px;
+  }
+  .section-title {
+    font-size: 32px;
+    line-height: 34px;
+  }
+}
+
+/* Anyone who has asked their OS to calm things down gets a still page. */
+@media (prefers-reduced-motion: reduce) {
+  html {
+    scroll-behavior: auto;
+  }
+  *,
+  *::before,
+  *::after {
+    animation-duration: 0.001ms !important;
+    animation-iteration-count: 1 !important;
+    transition-duration: 0.001ms !important;
+  }
+}
