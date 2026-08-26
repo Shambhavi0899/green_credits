@@ -4,6 +4,7 @@ import { motion } from 'framer-motion'
 import { Eyebrow } from '@/components/site/Eyebrow'
 import { rise, stagger, viewport } from '@/components/motion/variants'
 import { journey, journeySteps } from '@/data/home'
+import { journeyIllustrations } from './illustrations'
 import styles from './home.module.css'
 import { Fragment } from 'react'
 
@@ -41,20 +42,28 @@ export function Journey() {
         viewport={{ once: true, amount: 0.3 }}
         variants={stagger(0.08)}
       >
-        {journeySteps.map((step, index) => (
-          <Fragment key={step.index}>
-            {index > 0 ? <span className={styles.vRule} /> : null}
-            <motion.div
-              className={styles.step}
-              data-highlight={step.highlight ?? false}
-              variants={rise}
-            >
-              <span className={styles.stepIndex}>{step.index}</span>
-              <span className={styles.stepTitle}>{step.title}</span>
-              <span className={styles.stepBody}>{step.body}</span>
-            </motion.div>
-          </Fragment>
-        ))}
+        {journeySteps.map((step, index) => {
+          const Illustration = journeyIllustrations[index]
+          return (
+            <Fragment key={step.index}>
+              {index > 0 ? <span className={styles.vRule} /> : null}
+              <motion.div
+                className={styles.step}
+                data-highlight={step.highlight ?? false}
+                variants={rise}
+              >
+                {Illustration ? (
+                  <span className={styles.stepIllo}>
+                    <Illustration />
+                  </span>
+                ) : null}
+                <span className={styles.stepIndex}>{step.index}</span>
+                <span className={styles.stepTitle}>{step.title}</span>
+                <span className={styles.stepBody}>{step.body}</span>
+              </motion.div>
+            </Fragment>
+          )
+        })}
       </motion.div>
     </section>
   )

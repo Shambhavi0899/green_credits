@@ -4,43 +4,16 @@ import { motion } from 'framer-motion'
 import { CountUp } from '@/components/motion/CountUp'
 import { Eyebrow } from '@/components/site/Eyebrow'
 import { rise, stagger, viewport } from '@/components/motion/variants'
-import {
-  distinction,
-  howMade,
-  projectFamilies,
-  provenanceLeft,
-  provenanceRight,
-  workedExample,
-} from '@/data/home'
-import type { ProvenanceStep } from '@/lib/types'
+import { equivalencies, howMade, projectFamilies, workedExample } from '@/data/home'
+import { IconBulb, IconCar, IconRoad } from './icons'
+import { ProvenanceTimeline } from './ProvenanceTimeline'
 import styles from './home.module.css'
 
-function ProvenanceColumn({ steps, delay }: { steps: ProvenanceStep[]; delay: number }) {
-  return (
-    <motion.div
-      className={styles.provenanceColumn}
-      initial="hidden"
-      whileInView="shown"
-      viewport={{ once: true, amount: 0.15 }}
-      variants={stagger(0.07, delay)}
-    >
-      {steps.map((step) => (
-        <motion.div
-          key={step.index}
-          className={styles.provenanceRow}
-          data-highlight={step.highlight ?? false}
-          variants={rise}
-        >
-          <span className={styles.provenanceIndex}>{step.index}</span>
-          <span className={styles.provenanceCopy}>
-            <span className={styles.provenanceTitle}>{step.title}</span>
-            <span className={styles.provenanceBody}>{step.body}</span>
-          </span>
-        </motion.div>
-      ))}
-    </motion.div>
-  )
-}
+const EQUIVALENCY_ICONS = {
+  car: IconCar,
+  bulb: IconBulb,
+  road: IconRoad,
+} as const
 
 export function HowMade() {
   return (
@@ -91,42 +64,56 @@ export function HowMade() {
         ))}
       </motion.div>
 
-      <div className={styles.provenance}>
-        <ProvenanceColumn steps={provenanceLeft} delay={0} />
-        <ProvenanceColumn steps={provenanceRight} delay={0.08} />
-      </div>
+      <motion.div
+        className={styles.timelineWrap}
+        initial="hidden"
+        whileInView="shown"
+        viewport={viewport}
+        variants={rise}
+      >
+        <ProvenanceTimeline />
+      </motion.div>
 
-      <div className={styles.callouts}>
-        <motion.div
-          className={styles.worked}
-          initial="hidden"
-          whileInView="shown"
-          viewport={viewport}
-          variants={rise}
-        >
-          <span className={styles.workedLabel}>{workedExample.label}</span>
-          <span className={styles.workedFigure}>
-            <span className={styles.workedValue}>
-              <CountUp value={workedExample.value} />
+      <motion.div
+        className={styles.callouts}
+        initial="hidden"
+        whileInView="shown"
+        viewport={viewport}
+        variants={rise}
+      >
+        <div className={styles.worked}>
+          <div className={styles.workedCopy}>
+            <span className={styles.workedLabel}>{workedExample.label}</span>
+            <span className={styles.workedFigure}>
+              <span className={styles.workedValue}>
+                <CountUp value={workedExample.value} />
+              </span>
+              <span className={styles.workedUnit}>{workedExample.unit}</span>
             </span>
-            <span className={styles.workedUnit}>{workedExample.unit}</span>
-          </span>
-          <p className={styles.workedBody}>{workedExample.body}</p>
-        </motion.div>
+            <p className={styles.workedBody}>{workedExample.body}</p>
+          </div>
 
-        <motion.div
-          className={styles.distinction}
-          initial="hidden"
-          whileInView="shown"
-          viewport={viewport}
-          variants={rise}
-          transition={{ delay: 0.09 }}
-        >
-          <span className={styles.distinctionLabel}>{distinction.label}</span>
-          <p className={styles.distinctionTitle}>{distinction.title}</p>
-          <p className={styles.distinctionBody}>{distinction.body}</p>
-        </motion.div>
-      </div>
+          <div className={styles.equivalencies}>
+            {equivalencies.map((item) => {
+              const Icon = EQUIVALENCY_ICONS[item.icon]
+              return (
+                <div key={item.label} className={styles.equivalency}>
+                  <span className={styles.equivalencyIcon}>
+                    <Icon size={22} />
+                  </span>
+                  <span className={styles.equivalencyStat}>
+                    <span className={styles.equivalencyFigure}>{item.figure}</span>
+                    <span className={styles.equivalencyLabel}>{item.label}</span>
+                    <span className={styles.equivalencyBar} aria-hidden="true" />
+                  </span>
+                </div>
+              )
+            })}
+          </div>
+        </div>
+
+        <p className={styles.workedSource}>{workedExample.source}</p>
+      </motion.div>
     </section>
   )
 }

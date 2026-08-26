@@ -27,11 +27,38 @@ export type ProvenanceStep = {
   index: string
   title: string
   body: string
-  highlight?: boolean
+  /** Icon drawn in the step's dot on the timeline rail. */
+  icon:
+    | 'seedling'
+    | 'ruler'
+    | 'book'
+    | 'clipboard-check'
+    | 'chart-line'
+    | 'shield-check'
+    | 'certificate'
+    | 'recycle'
+}
+
+/** The eight provenance steps are grouped under three phase labels. */
+export type ProvenancePhase = {
+  label: string
+  /** How many consecutive steps sit under this label. */
+  count: number
+}
+
+/** One "20,000 tonnes is the same as…" tile in the worked example. */
+export type Equivalency = {
+  icon: 'car' | 'bulb' | 'road'
+  figure: string
+  label: string
 }
 
 export type CreditKind = {
   price: string
+  /** Numeric bounds of `price`, used to place the segment on the price scale. */
+  priceMin: number
+  priceMax: number
+  icon: 'flame' | 'factory' | 'tree' | 'bowl'
   name: string
   supply: string
   /** "OUR OWN SUPPLY" is copper; everything else is graphite. */
@@ -57,6 +84,8 @@ export type ServiceCard = {
   title: string
   body: string
   action: string
+  /** Where the panel's CTA points once this branch is selected. */
+  href: string
 }
 
 export type ImageAsset = {

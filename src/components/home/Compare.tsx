@@ -4,6 +4,7 @@ import { motion } from 'framer-motion'
 import { Eyebrow } from '@/components/site/Eyebrow'
 import { rise, row, stagger, viewport } from '@/components/motion/variants'
 import { compare, comparisonRows } from '@/data/home'
+import { IconCheck, IconShieldCheck, IconX } from './icons'
 import styles from './home.module.css'
 
 export function Compare() {
@@ -42,8 +43,13 @@ export function Compare() {
         variants={stagger(0.06)}
       >
         <motion.div className={styles.compareHeaderRow} variants={row}>
-          {compare.columns.map((column) => (
+          {compare.columns.map((column, index) => (
             <div key={column} className={styles.compareCell}>
+              {index === compare.columns.length - 1 ? (
+                <span className={styles.compareMark} data-tone="ours">
+                  <IconShieldCheck size={14} strokeWidth={2.5} />
+                </span>
+              ) : null}
               <span className={styles.compareHeaderLabel}>{column}</span>
             </div>
           ))}
@@ -55,9 +61,15 @@ export function Compare() {
               <span className={styles.compareAspect}>{line.aspect}</span>
             </div>
             <div className={styles.compareCell}>
+              <span className={styles.compareMark} data-tone="broker">
+                <IconX size={16} strokeWidth={2.5} />
+              </span>
               <span className={styles.compareBroker}>{line.broker}</span>
             </div>
             <div className={styles.compareCell}>
+              <span className={styles.compareMark} data-tone="ours">
+                <IconCheck size={16} strokeWidth={2.5} />
+              </span>
               <span className={styles.compareOurs}>{line.greenCredit}</span>
             </div>
           </motion.div>
