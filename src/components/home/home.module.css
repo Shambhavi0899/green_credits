@@ -300,6 +300,19 @@
   padding-block: 26px;
   padding-inline: 24px;
   transition: background-color 0.3s ease;
+
+  /* Flat two-colour illustration palette. The stroke is the site accent; the
+     sage fill has no token of its own because nothing else on the site uses it. */
+  --illo-fill: #c8ded6;
+  --illo-stroke: var(--color-copper);
+}
+
+/* The illustration sits above the step number. It is 40px tall and inherits the
+   card's 10px gap, so each card grows by 50px against the untouched padding. */
+.stepIllo {
+  display: block;
+  height: 40px;
+  flex-shrink: 0;
 }
 
 .step[data-highlight='true'] {
@@ -381,81 +394,235 @@
   color: var(--color-graphite);
 }
 
-.provenance {
-  display: flex;
-  gap: 24px;
+/* The eight steps read as one scrollable run inside a fixed frame, so the
+   section keeps a constant height however many steps it carries. */
+
+.timelineWrap {
   padding-top: 12px;
 }
 
-.provenanceColumn {
-  flex: 1;
+/* The tall parent is the scroll distance. The frame sticks inside it, so the
+   page's own scrollbar advances the steps — there is no second one. Roughly
+   40vh of page travel per step: long enough not to snap, short enough that the
+   section does not outstay its welcome. */
+.timelinePin {
+  position: relative;
+  height: calc(460px + 320vh);
+}
+
+.timelineSticky {
+  position: sticky;
+  /* Centred in the viewport, well clear of the 93px sticky header. */
+  top: calc(50vh - 230px);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 64px;
+}
+
+.timelineViewport {
+  position: relative;
+  width: 520px;
+  max-width: 100%;
+  height: 460px;
+  overflow: hidden;
+}
+
+.timelineTrack {
+  position: relative;
   display: flex;
   flex-direction: column;
-  background: var(--color-paper);
-  border: 1px solid var(--color-dust);
+  will-change: transform;
 }
 
-.provenanceRow {
+/* Both rails are absolute so the dots, which are in flow, paint over them. */
+.timelineRail,
+.timelineRailFill {
+  position: absolute;
+  left: 21px;
+  top: 0;
+  width: 2px;
+}
+
+.timelineRail {
+  background: var(--color-dust);
+}
+
+/* No transition: the height is scroll-linked, so easing it only adds lag. */
+.timelineRailFill {
+  background: var(--color-copper);
+}
+
+.timelinePhase,
+.timelineStep {
   display: flex;
+  gap: 22px;
+  transition: opacity 0.25s ease;
+}
+
+.timelinePhase {
+  padding-bottom: 16px;
+}
+
+.timelinePhase:not(:first-child) {
+  padding-top: 6px;
+}
+
+.timelinePhase[data-reached='false'] {
+  opacity: 0.45;
+}
+
+.timelineStep {
   align-items: flex-start;
-  gap: 18px;
-  padding-block: 22px;
-  padding-inline: 26px;
-  border-bottom: 1px solid var(--color-dust);
-  transition: background-color 0.3s ease;
+  padding-bottom: 30px;
 }
 
-.provenanceColumn > .provenanceRow:last-child {
-  border-bottom: 0;
+.timelineStep[data-state='ahead'] {
+  opacity: 0.45;
 }
 
-.provenanceRow[data-highlight='true'] {
-  background: var(--color-copper-tint);
-}
-
-.provenanceIndex {
-  width: 22px;
+.timelineGutter {
+  width: 44px;
   flex-shrink: 0;
-  padding-top: 3px;
+  display: flex;
+  justify-content: center;
+}
+
+.timelinePhaseLabel {
   font-family: var(--font-mono);
-  font-size: 13px;
+  font-size: 12px;
   line-height: 16px;
+  letter-spacing: 0.12em;
   color: var(--color-copper);
 }
 
-.provenanceCopy {
+.timelineDot {
+  position: relative;
+  z-index: 1;
+  width: 44px;
+  height: 44px;
+  flex-shrink: 0;
+  border-radius: 999px;
   display: flex;
-  flex-direction: column;
-  gap: 4px;
+  align-items: center;
+  justify-content: center;
+  background: var(--color-paper);
+  border: 2px solid var(--color-dust);
+  color: var(--color-graphite);
+  transition: background-color 0.25s ease, border-color 0.25s ease, color 0.25s ease;
 }
 
-.provenanceTitle {
+.timelineStep[data-state='done'] .timelineDot {
+  background: var(--color-copper-tint);
+  border-color: var(--color-copper);
+  color: var(--color-copper);
+}
+
+.timelineStep[data-state='active'] .timelineDot {
+  background: var(--color-copper);
+  border-color: var(--color-copper);
+  color: var(--color-limestone);
+}
+
+.timelineCopy {
+  display: flex;
+  flex-direction: column;
+  gap: 5px;
+  padding-top: 12px;
+}
+
+.timelineTitle {
   font-size: 16px;
   line-height: 20px;
   font-weight: 600;
   color: var(--color-slate);
 }
 
-.provenanceBody {
+.timelineBody {
   font-size: 14px;
   line-height: 23px;
   color: var(--color-graphite);
 }
 
+/* Companion panel: badge + counter, driven by the same active step as the rail. */
+
+.timelineCompanion {
+  display: flex;
+  flex-direction: column;
+  gap: 22px;
+  flex-shrink: 0;
+}
+
+.companionBadge {
+  width: 72px;
+  height: 72px;
+  flex-shrink: 0;
+  border-radius: 999px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  background: #dee9e4;
+  color: var(--color-copper);
+}
+
+.companionCount {
+  display: flex;
+  flex-direction: column;
+  gap: 6px;
+}
+
+.companionLabel {
+  font-family: var(--font-mono);
+  font-size: 11px;
+  line-height: 14px;
+  letter-spacing: 0.12em;
+  color: var(--color-graphite);
+}
+
+.companionFigure {
+  display: flex;
+  align-items: baseline;
+  gap: 10px;
+}
+
+.companionNumber {
+  font-family: var(--font-mono);
+  font-size: 44px;
+  line-height: 48px;
+  font-weight: 700;
+  letter-spacing: -0.025em;
+  font-variant-numeric: tabular-nums;
+  color: var(--color-copper);
+}
+
+.companionTotal {
+  font-size: 15px;
+  line-height: 18px;
+  color: var(--color-graphite);
+}
+
 .callouts {
   display: flex;
-  gap: 24px;
+  flex-direction: column;
+  gap: 10px;
   padding-top: 24px;
 }
 
 .worked {
-  flex: 1;
   display: flex;
-  flex-direction: column;
-  gap: 12px;
+  align-items: stretch;
+  gap: 48px;
   padding-block: 26px;
   padding-inline: 28px;
   background: var(--color-slate);
+}
+
+.workedCopy {
+  width: 400px;
+  flex-shrink: 0;
+  display: flex;
+  flex-direction: column;
+  gap: 12px;
 }
 
 .workedLabel {
@@ -492,35 +659,62 @@
   color: var(--ink-text-dim);
 }
 
-.distinction {
+/* Three tiles saying what 20,000 tonnes comes to in other units. All three
+   describe the same quantity, so the bar under each is a fixed accent — a
+   proportional scale across cars, homes and miles would be a category error,
+   and at these magnitudes two of the three bars would round to nothing. */
+
+.equivalencies {
+  flex: 1;
+  display: flex;
+  gap: 16px;
+}
+
+.equivalency {
   flex: 1;
   display: flex;
   flex-direction: column;
-  gap: 12px;
-  padding-block: 26px;
-  padding-inline: 28px;
-  background: var(--color-brass-tint);
-  border: 1px solid var(--color-brass);
+  justify-content: space-between;
+  gap: 14px;
+  padding: 20px;
+  border: 1px solid rgba(242, 241, 236, 0.14);
 }
 
-.distinctionLabel {
+.equivalencyIcon {
+  display: block;
+  color: var(--ink-mint);
+}
+
+.equivalencyStat {
+  display: flex;
+  flex-direction: column;
+  gap: 4px;
+}
+
+.equivalencyFigure {
   font-family: var(--font-mono);
-  font-size: 10px;
-  line-height: 12px;
-  letter-spacing: 0.1em;
-  color: var(--color-brass);
+  font-size: 26px;
+  line-height: 32px;
+  letter-spacing: -0.02em;
+  color: var(--ink-text);
 }
 
-.distinctionTitle {
-  font-size: 17px;
-  line-height: 26px;
-  font-weight: 600;
-  color: var(--color-slate);
+.equivalencyLabel {
+  font-size: 13px;
+  line-height: 18px;
+  color: var(--ink-text-muted);
 }
 
-.distinctionBody {
-  font-size: 15px;
-  line-height: 25px;
+.equivalencyBar {
+  margin-top: 10px;
+  height: 3px;
+  border-radius: 2px;
+  background: var(--ink-mint);
+}
+
+.workedSource {
+  font-size: 13px;
+  line-height: 18px;
   color: var(--color-graphite);
 }
 
@@ -531,52 +725,54 @@
   gap: 26px;
 }
 
-.kindsTable {
+.kindCards {
+  display: flex;
+  gap: 24px;
+  align-items: stretch;
+}
+
+/* A card is a button: clicking it moves the segment on the scale below. */
+.kindCard {
+  flex: 1;
+  min-width: 0;
   display: flex;
   flex-direction: column;
+  text-align: left;
   background: var(--color-paper);
   border: 1px solid var(--color-dust);
+  transition: border-color 0.25s ease, box-shadow 0.25s ease;
 }
 
-.kindRow {
+.kindCard:hover {
+  border-color: var(--color-copper);
+  box-shadow: 0 12px 30px rgba(18, 18, 15, 0.07);
+}
+
+.kindCard[data-selected='true'] {
+  border-color: var(--color-copper);
+}
+
+.kindIcon {
+  height: 80px;
+  flex-shrink: 0;
   display: flex;
-  align-items: flex-start;
-  gap: 24px;
-  padding-block: 22px;
-  padding-inline: 26px;
-  border-bottom: 1px solid var(--color-dust);
-  transition: background-color 0.3s ease;
+  align-items: center;
+  justify-content: center;
+  background: var(--color-copper-tint);
+  color: var(--color-copper);
 }
 
-.kindsTable > .kindRow:last-child {
-  border-bottom: 0;
-}
-
-.kindRow:hover {
-  background: var(--color-limestone);
+.kindCardBody {
+  display: flex;
+  flex-direction: column;
+  gap: 5px;
+  padding: 20px;
 }
 
 .kindPrice {
-  width: 150px;
-  flex-shrink: 0;
   font-family: var(--font-mono);
   font-size: 17px;
   line-height: 22px;
-  color: var(--color-slate);
-}
-
-.kindName {
-  width: 230px;
-  flex-shrink: 0;
-  display: flex;
-  flex-direction: column;
-  gap: 3px;
-}
-
-.kindNameTitle {
-  font-size: 16px;
-  line-height: 20px;
-  font-weight: 600;
   color: var(--color-slate);
 }
 
@@ -592,10 +788,55 @@
   color: var(--color-copper);
 }
 
+.kindNameTitle {
+  padding-top: 5px;
+  font-size: 16px;
+  line-height: 20px;
+  font-weight: 600;
+  color: var(--color-slate);
+}
+
 .kindBody {
-  flex: 1;
   font-size: 15px;
   line-height: 24px;
+  color: var(--color-graphite);
+}
+
+/* --- Price scale --------------------------------------------------------- */
+
+.priceScale {
+  display: flex;
+  flex-direction: column;
+  gap: 8px;
+  padding-top: 4px;
+}
+
+.priceTrack {
+  position: relative;
+  height: 8px;
+  border-radius: 4px;
+  background: var(--color-dust);
+}
+
+.priceSegment {
+  position: absolute;
+  top: 0;
+  height: 8px;
+  border-radius: 4px;
+  background: rgba(31, 107, 91, 0.3);
+  transition: left 0.35s cubic-bezier(0.16, 1, 0.3, 1),
+    width 0.35s cubic-bezier(0.16, 1, 0.3, 1);
+}
+
+.priceLabels {
+  display: flex;
+  justify-content: space-between;
+}
+
+.priceLabelEnd {
+  font-family: var(--font-mono);
+  font-size: 12px;
+  line-height: 16px;
   color: var(--color-graphite);
 }
 
@@ -647,6 +888,9 @@
 
 .compareCell {
   flex: 1;
+  display: flex;
+  align-items: flex-start;
+  gap: 10px;
   padding-block: 20px;
   padding-inline: 28px;
 }
@@ -657,11 +901,38 @@
 }
 
 .compareHeaderRow .compareCell {
+  align-items: center;
+  gap: 8px;
   padding-block: 16px;
 }
 
+/* The header carries the stronger tint; the body cells below take a lighter
+   wash so the whole column reads as one, not just its head. */
 .compareHeaderRow .compareCell:last-child {
   background: var(--color-copper-tint);
+}
+
+.compareRow .compareCell:last-child {
+  background: rgba(31, 107, 91, 0.04);
+}
+
+/* ✕ / ✓ before each claim. Nudged down to sit on the first line of copy. */
+.compareMark {
+  display: flex;
+  flex-shrink: 0;
+  padding-top: 4px;
+}
+
+.compareHeaderRow .compareMark {
+  padding-top: 0;
+}
+
+.compareMark[data-tone='broker'] {
+  color: var(--color-oxide);
+}
+
+.compareMark[data-tone='ours'] {
+  color: var(--color-copper);
 }
 
 .compareHeaderLabel {
@@ -804,42 +1075,120 @@
   padding-top: 76px;
 }
 
-.serviceCards {
-  display: flex;
-  gap: 20px;
-}
+/* A trunk splits into three branches; picking one swaps the panel below it. */
 
-.serviceCard {
-  flex: 1;
+.branching {
   display: flex;
   flex-direction: column;
-  gap: 12px;
-  padding-top: 30px;
-  padding-bottom: 32px;
-  padding-inline: 28px;
-  background: var(--color-paper);
-  border: 1px solid var(--color-dust);
-  transition: border-color 0.3s ease, box-shadow 0.3s ease;
+  gap: 32px;
 }
 
-.serviceCard:hover {
-  border-color: var(--color-copper);
-  box-shadow: 0 14px 34px rgba(18, 18, 15, 0.06);
+.branchDiagram {
+  position: relative;
 }
 
-.servicePricing {
+.branchSvg {
+  display: block;
+  width: 100%;
+  height: auto;
+  overflow: visible;
+}
+
+.branchTrunk,
+.branchIdle path,
+.branchActive path {
+  fill: none;
+  stroke-width: 2;
+  stroke-linecap: round;
+}
+
+.branchTrunk {
+  stroke: var(--color-copper);
+}
+
+.branchIdle path {
+  stroke: var(--color-dust);
+}
+
+.branchIdle circle {
+  fill: var(--color-dust);
+}
+
+.branchActive path {
+  stroke: var(--color-copper);
+}
+
+.branchActive circle {
+  fill: var(--color-copper);
+}
+
+.branchIdle,
+.branchActive {
+  cursor: pointer;
+}
+
+.branchIdle path,
+.branchIdle circle,
+.branchActive path,
+.branchActive circle {
+  transition: stroke 0.25s ease, fill 0.25s ease;
+}
+
+/* Invisible, generously thick, and the only part of a branch that takes a hit. */
+.branchHit {
+  stroke: transparent !important;
+  stroke-width: 22 !important;
+  pointer-events: stroke;
+}
+
+.branchLabel {
+  position: absolute;
+  display: flex;
+  flex-direction: column;
+  gap: 4px;
+  text-align: left;
+  cursor: pointer;
+}
+
+.branchLabelTag {
   font-family: var(--font-mono);
   font-size: 11px;
   line-height: 14px;
   letter-spacing: 0.1em;
   color: var(--color-graphite);
+  transition: color 0.25s ease;
 }
 
-.servicePricing[data-accent='true'] {
+.branchLabelTitle {
+  font-size: 18px;
+  line-height: 22px;
+  font-weight: 600;
+  color: var(--color-graphite);
+  transition: color 0.25s ease;
+}
+
+.branchLabel[data-active='true'] .branchLabelTag,
+.branchLabel[data-active='true'] .branchLabelTitle {
   color: var(--color-copper);
 }
 
-.serviceTitle {
+.branchLabel:hover .branchLabelTitle {
+  color: var(--color-copper);
+}
+
+.branchPanel {
+  display: flex;
+  flex-direction: column;
+  gap: 14px;
+  align-items: flex-start;
+  padding-top: 30px;
+  padding-bottom: 32px;
+  padding-inline: 28px;
+  background: var(--color-paper);
+  border: 1px solid var(--color-dust);
+}
+
+.branchPanelTitle {
   font-family: var(--font-display);
   font-size: 26px;
   line-height: 31px;
@@ -848,31 +1197,30 @@
   font-stretch: 112%;
   font-variation-settings: 'wdth' 112;
   color: var(--color-slate);
+  margin: 0;
 }
 
-.serviceBody {
+.branchPanelBody {
+  max-width: 760px;
   font-size: 15px;
   line-height: 25px;
   color: var(--color-graphite);
 }
 
-.serviceAction {
-  padding-top: 6px;
+.branchPanelAction {
   font-size: 15px;
   line-height: 18px;
   font-weight: 600;
   color: var(--color-copper);
-  align-self: flex-start;
 }
 
-/* An arrow slides out on hover — the design's link has none at rest. */
-.serviceAction::after {
+.branchPanelAction::after {
   content: ' →';
   opacity: 0;
   transition: opacity 0.25s ease;
 }
 
-.serviceCard:hover .serviceAction::after {
+.branchPanelAction:hover::after {
   opacity: 1;
 }
 
@@ -1119,18 +1467,21 @@
     line-height: 38px;
   }
   .families,
-  .provenance,
-  .callouts,
-  .serviceCards,
+  .kindCards,
   .teasers {
     flex-wrap: wrap;
   }
-  .provenanceColumn,
-  .worked,
-  .distinction,
-  .serviceCard,
+  .kindCard,
   .teaser {
     min-width: 320px;
+  }
+  /* The worked example stacks its copy above the equivalency tiles. */
+  .worked {
+    flex-direction: column;
+    gap: 28px;
+  }
+  .workedCopy {
+    width: auto;
   }
   .steps {
     flex-wrap: wrap;
@@ -1150,10 +1501,20 @@
   .stats,
   .proofPoints,
   .compareRow,
-  .compareHeaderRow,
-  .kindRow {
+  .compareHeaderRow {
     flex-direction: column;
     align-items: stretch;
+  }
+  .equivalencies {
+    flex-direction: column;
+  }
+  /* Below this the branch labels would collide with each other. */
+  .branchLabelTitle {
+    font-size: 15px;
+    line-height: 19px;
+  }
+  .branchLabelTag {
+    font-size: 10px;
   }
   .vRule,
   .proofRule {
@@ -1173,9 +1534,8 @@
     border-left: 0;
     border-top: 1px solid var(--color-dust);
   }
-  .kindPrice,
-  .kindName {
-    width: auto;
+  .kindCards {
+    flex-direction: column;
   }
   .proofPoint,
   .proofPoint:first-child,

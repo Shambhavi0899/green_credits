@@ -1,9 +1,11 @@
 import type {
   ComparisonRow,
   CreditKind,
+  Equivalency,
   JourneyStep,
   ProjectFamily,
   ProofPoint,
+  ProvenancePhase,
   ProvenanceStep,
   ServiceCard,
   Stat,
@@ -95,51 +97,63 @@ export const projectFamilies: ProjectFamily[] = [
   },
 ]
 
-export const provenanceLeft: ProvenanceStep[] = [
+/** The eight steps, in order, as one scrollable run down the timeline rail. */
+export const provenanceSteps: ProvenanceStep[] = [
   {
     index: '01',
+    icon: 'seedling',
     title: 'A climate project is developed',
     body: 'Planting forests, capturing methane, replacing fossil fuel power with renewables, or pulling carbon straight out of the air.',
   },
   {
     index: '02',
+    icon: 'ruler',
     title: 'A baseline is calculated',
     body: 'The developer works out what the emissions would have been if the project had never happened. Everything else is measured against this.',
   },
   {
     index: '03',
+    icon: 'book',
     title: 'A recognised methodology is followed',
     body: 'A published rulebook that sets out exactly how the reduction or removal has to be calculated. Not something the project invents.',
   },
   {
     index: '04',
+    icon: 'clipboard-check',
     title: 'The project is validated',
     body: 'An independent auditor checks that the design and the sums actually meet the standard being claimed.',
   },
-]
-
-export const provenanceRight: ProvenanceStep[] = [
   {
     index: '05',
+    icon: 'chart-line',
     title: 'Results are monitored',
     body: 'The project gathers evidence over time showing how much carbon was really avoided or removed, not just predicted.',
   },
   {
     index: '06',
+    icon: 'shield-check',
     title: 'The results are verified',
     body: 'A second independent verifier reviews all that evidence and confirms the reduction actually achieved.',
   },
   {
     index: '07',
+    icon: 'certificate',
     title: 'Credits are issued by a registry',
     body: 'The registry creates the credits and gives each one a unique serial number. One credit equals one tonne of CO₂e reduced or removed.',
-    highlight: true,
   },
   {
     index: '08',
+    icon: 'recycle',
     title: 'Credits are sold and retired',
     body: 'You buy them. When you use them to claim against your own emissions they are retired on the registry, so nobody can ever sell them again.',
   },
+]
+
+/** Phase labels interleaved into the run above: steps 1–3, 4–6, 7–8. */
+export const provenancePhases: ProvenancePhase[] = [
+  { label: 'DESIGN THE PROJECT', count: 3 },
+  { label: 'PROVE IT HAPPENED', count: 3 },
+  { label: 'ISSUE AND SELL', count: 2 },
 ]
 
 export const workedExample = {
@@ -147,13 +161,23 @@ export const workedExample = {
   value: '20,000',
   unit: 'tonnes prevented',
   body: 'If a methane capture project verifiably prevents 20,000 tonnes of CO₂e, the registry may issue 20,000 carbon credits against it. Each one carries its own serial number and can only ever be retired once.',
+  source: 'Based on EPA greenhouse gas equivalency figures',
 } as const
 
-export const distinction = {
-  label: 'A DISTINCTION WORTH MAKING',
-  title: 'Carbon credits and India’s Green Credits are not the same thing.',
-  body: 'A carbon credit specifically represents CO₂e reduced or removed. India’s Green Credit scheme rewards a wider set of environmental activities, such as tree planting, water conservation and waste management. If you are buying to offset emissions, you want carbon credits.',
-} as const
+/**
+ * What 20,000 tonnes of CO₂e comes to in other units. Derived from the EPA
+ * Greenhouse Gas Equivalencies Calculator (2022 data):
+ *   cars   20,000 ÷ 4.29 t/vehicle/year        = 4,662
+ *   homes  20,000 ÷ 4.798 t/home/year (elec.)  = 4,168
+ *   miles  20,000 ÷ 3.93e-4 t/mile             = 50,890,585
+ * All three describe the same 20,000 tonnes, so the bar under each tile is a
+ * fixed-width accent rather than a proportional one — see `equivalencyBar`.
+ */
+export const equivalencies: Equivalency[] = [
+  { icon: 'car', figure: '4,662', label: 'cars off the road for a year' },
+  { icon: 'bulb', figure: '4,168', label: 'homes powered for a year' },
+  { icon: 'road', figure: '50.9M', label: 'miles not driven' },
+]
 
 export const kinds = {
   label: 'WHAT KINDS ARE THERE?',
@@ -163,6 +187,9 @@ export const kinds = {
 export const creditKinds: CreditKind[] = [
   {
     price: '$18-24',
+    priceMin: 18,
+    priceMax: 24,
+    icon: 'flame',
     name: 'Methane, sealed wells',
     supply: 'OUR OWN SUPPLY',
     supplyAccent: true,
@@ -170,23 +197,41 @@ export const creditKinds: CreditKind[] = [
   },
   {
     price: '$16-22',
+    priceMin: 16,
+    priceMax: 22,
+    icon: 'factory',
     name: 'Clean coal and industry',
     supply: 'SOURCED',
     body: 'Boilers and furnaces retrofitted to burn less for the same output. Cheap, measurable, and ruled out by any buyer whose policy excludes fossil fuels.',
   },
   {
     price: '$25-35',
+    priceMin: 25,
+    priceMax: 35,
+    icon: 'tree',
     name: 'Forestry and replanting',
     supply: 'SOURCED',
     body: 'The one everybody pictures. It reads well in a report, and it costs more because a forest has to be watched for decades and can still burn.',
   },
   {
     price: '$9-20',
+    priceMin: 9,
+    priceMax: 20,
+    icon: 'bowl',
     name: 'Cookstoves and soil',
     supply: 'SOURCED',
     body: 'Cheapest on the market and the hardest to prove, because you are measuring something that would have happened otherwise. Most of the credits that failed independent review sit here.',
   },
 ]
+
+/**
+ * The scale under the card grid spans every kind's range end to end. Derived
+ * rather than hardcoded so adding a cheaper or dearer kind re-scales it.
+ */
+export const priceScale = {
+  min: Math.min(...creditKinds.map((kind) => kind.priceMin)),
+  max: Math.max(...creditKinds.map((kind) => kind.priceMax)),
+}
 
 export const compare = {
   label: 'WHY NOT JUST USE A BROKER?',
@@ -260,18 +305,21 @@ export const serviceCards: ServiceCard[] = [
     title: 'Marketplace',
     body: 'Verified sellers in one place. Compare price, credit type and track record, open any listing to read the paperwork, then order. We take a small commission from the seller, never from you.',
     action: 'Browse sellers',
+    href: '/sellers',
   },
   {
     pricing: 'PAID, BY THE DAY',
     title: 'Consulting',
     body: 'If you do not know how many tonnes you need or which kind your auditor will accept, we work it out with you. Useful when there is a policy, a board, or a reporting deadline involved.',
     action: 'Talk to someone',
+    href: '/signin',
   },
   {
     pricing: 'PAID, PER PORTFOLIO',
     title: 'Portfolio design',
     body: 'For buyers taking a few thousand tonnes a month. We build the mix across sellers and credit types, set it up to repeat, and keep it inside whatever your policy rules out.',
     action: 'See how it works',
+    href: '/assistant',
   },
 ]
 
