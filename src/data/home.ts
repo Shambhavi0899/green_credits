@@ -187,8 +187,6 @@ export const kinds = {
 export const creditKinds: CreditKind[] = [
   {
     price: '$18-24',
-    priceMin: 18,
-    priceMax: 24,
     icon: 'flame',
     name: 'Methane, sealed wells',
     supply: 'OUR OWN SUPPLY',
@@ -197,8 +195,6 @@ export const creditKinds: CreditKind[] = [
   },
   {
     price: '$16-22',
-    priceMin: 16,
-    priceMax: 22,
     icon: 'factory',
     name: 'Clean coal and industry',
     supply: 'SOURCED',
@@ -206,8 +202,6 @@ export const creditKinds: CreditKind[] = [
   },
   {
     price: '$25-35',
-    priceMin: 25,
-    priceMax: 35,
     icon: 'tree',
     name: 'Forestry and replanting',
     supply: 'SOURCED',
@@ -215,23 +209,12 @@ export const creditKinds: CreditKind[] = [
   },
   {
     price: '$9-20',
-    priceMin: 9,
-    priceMax: 20,
     icon: 'bowl',
     name: 'Cookstoves and soil',
     supply: 'SOURCED',
     body: 'Cheapest on the market and the hardest to prove, because you are measuring something that would have happened otherwise. Most of the credits that failed independent review sit here.',
   },
 ]
-
-/**
- * The scale under the card grid spans every kind's range end to end. Derived
- * rather than hardcoded so adding a cheaper or dearer kind re-scales it.
- */
-export const priceScale = {
-  min: Math.min(...creditKinds.map((kind) => kind.priceMin)),
-  max: Math.max(...creditKinds.map((kind) => kind.priceMax)),
-}
 
 export const compare = {
   label: 'WHY NOT JUST USE A BROKER?',
