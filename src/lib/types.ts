@@ -55,9 +55,6 @@ export type Equivalency = {
 
 export type CreditKind = {
   price: string
-  /** Numeric bounds of `price`, used to place the segment on the price scale. */
-  priceMin: number
-  priceMax: number
   icon: 'flame' | 'factory' | 'tree' | 'bowl'
   name: string
   supply: string

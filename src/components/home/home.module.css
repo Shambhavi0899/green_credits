@@ -731,7 +731,6 @@
   align-items: stretch;
 }
 
-/* A card is a button: clicking it moves the segment on the scale below. */
 .kindCard {
   flex: 1;
   min-width: 0;
@@ -746,10 +745,6 @@
 .kindCard:hover {
   border-color: var(--color-copper);
   box-shadow: 0 12px 30px rgba(18, 18, 15, 0.07);
-}
-
-.kindCard[data-selected='true'] {
-  border-color: var(--color-copper);
 }
 
 .kindIcon {
@@ -802,44 +797,6 @@
   color: var(--color-graphite);
 }
 
-/* --- Price scale --------------------------------------------------------- */
-
-.priceScale {
-  display: flex;
-  flex-direction: column;
-  gap: 8px;
-  padding-top: 4px;
-}
-
-.priceTrack {
-  position: relative;
-  height: 8px;
-  border-radius: 4px;
-  background: var(--color-dust);
-}
-
-.priceSegment {
-  position: absolute;
-  top: 0;
-  height: 8px;
-  border-radius: 4px;
-  background: rgba(31, 107, 91, 0.3);
-  transition: left 0.35s cubic-bezier(0.16, 1, 0.3, 1),
-    width 0.35s cubic-bezier(0.16, 1, 0.3, 1);
-}
-
-.priceLabels {
-  display: flex;
-  justify-content: space-between;
-}
-
-.priceLabelEnd {
-  font-family: var(--font-mono);
-  font-size: 12px;
-  line-height: 16px;
-  color: var(--color-graphite);
-}
-
 /* --- Compare (node "Compare") -------------------------------------------- */
 
 .compare {
@@ -869,20 +826,16 @@
 .compareHeaderRow {
   display: flex;
   background: var(--color-limestone);
-  border-bottom: 1px solid var(--color-dust);
 }
 
 .compareRow {
   display: flex;
-  border-bottom: 1px solid var(--color-dust);
-  transition: background-color 0.3s ease;
+  /* Cells stretch to the row, so the row is the single place a height is set —
+     the borders then line up across all three columns whatever the copy does. */
+  min-height: 52px;
 }
 
-.compareTable > .compareRow:last-child {
-  border-bottom: 0;
-}
-
-.compareRow:hover {
+.compareRow:hover .compareCell:not(:last-child) {
   background: #faf9f6;
 }
 
@@ -891,8 +844,14 @@
   display: flex;
   align-items: flex-start;
   gap: 10px;
-  padding-block: 20px;
-  padding-inline: 28px;
+  padding-block: 12px;
+  padding-inline: 14px;
+  border-bottom: 1px solid var(--color-dust);
+  transition: background-color 0.3s ease;
+}
+
+.compareTable > .compareRow:last-child .compareCell {
+  border-bottom: 0;
 }
 
 .compareCell + .compareCell {
@@ -903,36 +862,56 @@
 .compareHeaderRow .compareCell {
   align-items: center;
   gap: 8px;
-  padding-block: 16px;
 }
 
-/* The header carries the stronger tint; the body cells below take a lighter
-   wash so the whole column reads as one, not just its head. */
-.compareHeaderRow .compareCell:last-child {
-  background: var(--color-copper-tint);
-}
-
+/* Header and body cells share one fill, and the column's internal borders come
+   off, so it reads as a single block rather than six tinted cells. */
+.compareHeaderRow .compareCell:last-child,
 .compareRow .compareCell:last-child {
-  background: rgba(31, 107, 91, 0.04);
+  background: #1f6b5b;
+  border-bottom: 0;
+  border-left: 0;
 }
 
-/* ✕ / ✓ before each claim. Nudged down to sit on the first line of copy. */
+/* Anchors the tab to the top-right of the column. */
+.compareHeaderRow .compareCell:last-child {
+  position: relative;
+}
+
+/* A flat tab mounted on the corner: it clears the header label, which sits to
+   the left of it, and nothing is rotated or clipped. */
+.compareRibbon {
+  position: absolute;
+  top: 0;
+  right: 0;
+  padding-block: 3px;
+  padding-inline: 10px;
+  background: #dee9e4;
+  color: #1f6b5b;
+  font-family: var(--font-mono);
+  font-size: 10px;
+  line-height: 14px;
+  letter-spacing: 0.08em;
+  text-transform: uppercase;
+}
+
+/* ✓ before each claim. Nudged down to sit on the first line of copy. */
 .compareMark {
   display: flex;
   flex-shrink: 0;
-  padding-top: 4px;
+  padding-top: 3px;
 }
 
 .compareHeaderRow .compareMark {
   padding-top: 0;
 }
 
-.compareMark[data-tone='broker'] {
-  color: var(--color-oxide);
+.compareMark[data-tone='ours'] {
+  color: #ffffff;
 }
 
-.compareMark[data-tone='ours'] {
-  color: var(--color-copper);
+.compareHeaderRow .compareMark[data-tone='ours'] {
+  color: #dee9e4;
 }
 
 .compareHeaderLabel {
@@ -944,26 +923,26 @@
 }
 
 .compareHeaderRow .compareCell:last-child .compareHeaderLabel {
-  color: var(--color-copper);
+  color: #dee9e4;
 }
 
 .compareAspect {
-  font-size: 16px;
-  line-height: 20px;
+  font-size: 14px;
+  line-height: 18px;
   font-weight: 600;
   color: var(--color-slate);
 }
 
 .compareBroker {
-  font-size: 16px;
-  line-height: 25px;
+  font-size: 13px;
+  line-height: 21px;
   color: var(--color-graphite);
 }
 
 .compareOurs {
-  font-size: 16px;
-  line-height: 25px;
-  color: var(--color-slate);
+  font-size: 13px;
+  line-height: 21px;
+  color: #ffffff;
 }
 
 /* --- Proof (node "Proof") ------------------------------------------------ */
@@ -1075,7 +1054,26 @@
   padding-top: 76px;
 }
 
-/* A trunk splits into three branches; picking one swaps the panel below it. */
+/* A trunk splits into three branches; page scroll moves between them and swaps
+   the panel below, the same way the provenance timeline advances its steps.
+   The tall parent is the travel, the block sticks inside it — 50vh of page
+   scroll per branch, a third of the eight-step section's distance. */
+
+.branchPin {
+  position: relative;
+}
+
+.branchPin::after {
+  content: '';
+  display: block;
+  height: 150vh;
+}
+
+.branchSticky {
+  position: sticky;
+  /* Centred in the viewport, well clear of the 93px sticky header. */
+  top: calc(50vh - 230px);
+}
 
 .branching {
   display: flex;
@@ -1122,23 +1120,11 @@
   fill: var(--color-copper);
 }
 
-.branchIdle,
-.branchActive {
-  cursor: pointer;
-}
-
 .branchIdle path,
 .branchIdle circle,
 .branchActive path,
 .branchActive circle {
   transition: stroke 0.25s ease, fill 0.25s ease;
-}
-
-/* Invisible, generously thick, and the only part of a branch that takes a hit. */
-.branchHit {
-  stroke: transparent !important;
-  stroke-width: 22 !important;
-  pointer-events: stroke;
 }
 
 .branchLabel {
@@ -1147,7 +1133,6 @@
   flex-direction: column;
   gap: 4px;
   text-align: left;
-  cursor: pointer;
 }
 
 .branchLabelTag {
@@ -1169,10 +1154,6 @@
 
 .branchLabel[data-active='true'] .branchLabelTag,
 .branchLabel[data-active='true'] .branchLabelTitle {
-  color: var(--color-copper);
-}
-
-.branchLabel:hover .branchLabelTitle {
   color: var(--color-copper);
 }
 
@@ -1508,6 +1489,21 @@
   .equivalencies {
     flex-direction: column;
   }
+  /* The 1264 × 220 diagram scales to about 57px tall here, and the labels are
+     positioned as percentages of that box — so they land on top of each other
+     and on the panel below. Under this width the branches read as a plain list
+     instead: same tag, same title, same active colour, nothing overlapping. */
+  .branchSvg {
+    display: none;
+  }
+  .branchDiagram {
+    display: flex;
+    flex-direction: column;
+    gap: 18px;
+  }
+  .branchLabel {
+    position: static;
+  }
   /* Below this the branch labels would collide with each other. */
   .branchLabelTitle {
     font-size: 15px;
@@ -1534,8 +1530,30 @@
     border-left: 0;
     border-top: 1px solid var(--color-dust);
   }
+  /* Stacked cells carry their own top border, so the row takes the separator
+     back and the cells drop theirs. */
+  .compareCell {
+    border-bottom: 0;
+  }
+  .compareHeaderRow,
+  .compareRow {
+    border-bottom: 1px solid var(--color-dust);
+  }
+  .compareTable > .compareRow:last-child {
+    border-bottom: 0;
+  }
+  .compareHeaderRow .compareCell:last-child,
+  .compareRow .compareCell:last-child {
+    border-top: 0;
+  }
   .kindCards {
     flex-direction: column;
+  }
+  /* Four project types across one row squeeze past readability on phones,
+     so they fold into a 2x2 grid. */
+  .families {
+    display: grid;
+    grid-template-columns: repeat(2, 1fr);
   }
   .proofPoint,
   .proofPoint:first-child,
